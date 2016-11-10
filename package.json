@@ -1,0 +1,23 @@
+{
+  "name": "challengeserver",
+  "version": "1.0.0",
+  "description": "Server for challenge app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/klyve/challengeserver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/klyve/challengeserver/issues"
+  },
+  "homepage": "https://github.com/klyve/challengeserver#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mongoose": "^4.6.6"
+  }
+}
