@@ -18,6 +18,7 @@ let express     = require('express'),
 
 
 require('./api/user.js')(api);
+require('./api/groups.js')(api);
 
 
 
