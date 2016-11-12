@@ -3,36 +3,23 @@
 let bluebird  = require('bluebird')
 
 function Group(){
-  this.id = 0;
-  this.name = "";
-  this.picturePath = "";
-  this.description = "";
-  this.unread = 0;
+  this.id;
+  this.name;
+  this.image;
+  this.bio;
+  this.members;
+  this.challenges;
+  this.unread;
 }
 
-// Testdata
-var ntnu = new Group();
-  ntnu.id = 0;
-  ntnu.name = "NTNU";
-  ntnu.picturePath = "https://pbs.twimg.com/profile_images/661115078964412416/T9t1CC_W.png";
-  ntnu.description = "Offentlig gruppe for NTNU! :)";
-  ntnu.unread = 3;
+var t1 = new Group();
+  t1.id = 69;
+  t1.name = 'Jonas er her <3';
+  t1.image = 'https://scontent-arn2-1.xx.fbcdn.net/t31.0-8/14138130_294308567597428_2912771272278186301_o.jpg'
+  t1.bio = 'Dette er veldig lol';
+  t1.unread = 69;
 
-var gjovik = new Group();
-  gjovik.id = 1;
-  gjovik.name = "Gjøvik";
-  gjovik.picturePath = "http://pilegrimsleden.no/uploads/made/uploads/images/Om/POI/Kommunevaapen/390px-Gjoevik_komm.svg_600_738_s.png";
-  gjovik.description = "Vi utfordrer Gjøvik!";
-  gjovik.unread = 23;
-
-var polse = new Group();
-  polse.id = 1;
-  polse.name = "Pølsefest";
-  polse.picturePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Reunion_sausages_dsc07796.jpg/220px-Reunion_sausages_dsc07796.jpg";
-  polse.description = "Jeg liker milfs...";
-  polse.unread = 143;
-
-var groups = [ntnu, gjovik, polse];
+var groups = [t1];
 
 module.exports = (api) => {
 
