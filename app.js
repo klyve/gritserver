@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 require('./api/groups')(api);
-
+require('./api/user')(api);
 // Enable the api
 app.use('/api', api)
 

@@ -1,16 +1,8 @@
 "use strict"
 
-let bluebird  = require('bluebird')
-
-function User(){
-  this.id;
-  this.name;
-  this.image;
-  this.bio;
-  this.members;
-  this.challenges;
-}
-
+let bluebird  = require('bluebird'),
+    User = require('../models/User.js'),
+    jwt = require('jsonwebtoken');
 
 
 module.exports = (api) => {
@@ -20,5 +12,25 @@ module.exports = (api) => {
       res.send("Get a user!")
     })
 
+  api.route('/user/auth')
+    .post((req, res) => {
+      User.getUser({
+        number: req.body.username,
+        password: req.body.password,
+      }, function(err, data) {
+        if(err || !data.length) {
+          res.send({error: true});
+        }else {
+          let token = jwt.sign({ uid: data[0]._id }, 'supersecret');
+          res.send({
+            status: 200,
+            token,
+          })
+        }
+      })
+      // User.find({number: '95047857'}).exec(function(err, data) {
+      //   console.log(err, data)
+      // });
+    })
 
 }
