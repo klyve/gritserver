@@ -14,11 +14,9 @@ module.exports = function(mongoose) {
   });
 
   var Group = new Schema({
-    id: String,
     name: String,
     image: String,
     bio: String,
-    unread: Number,
     members: Array,
     admins: Array,
     challenges: Array,
