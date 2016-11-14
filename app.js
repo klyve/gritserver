@@ -26,8 +26,8 @@ app.all('*', (req,res) => {
     "error_message": "Bad request, 404 not found"
   })
 })
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!')
+app.listen(80, function () {
+  console.log('app listening on port 80!')
 })
 
 // http.createServer(function(req, res) {
