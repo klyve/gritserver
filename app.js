@@ -7,8 +7,6 @@ let express     = require('express'),
 
 let mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/challenge')
-
-
 // Body parser
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -28,3 +26,18 @@ app.all('*', (req,res) => {
 app.listen(3000, () => {
   console.log('Example app listening on port 3000!')
 })
+
+
+require('letsencrypt-express').create({
+
+  server: 'staging'
+
+, email: 'bjartekll555@gmail.com'
+
+, agreeTos: true
+
+, approveDomains: [ 'app.bjartelarsen.com' ]
+
+, app: app
+
+}).listen(80, 443);
