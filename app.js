@@ -23,11 +23,6 @@ app.all('*', (req,res) => {
   })
 })
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!')
-})
-
-
 require('letsencrypt-express').create({
 
   server: 'https://acme-v01.api.letsencrypt.org/directory'
@@ -36,7 +31,7 @@ require('letsencrypt-express').create({
 
 , agreeTos: true
 
-, approveDomains: [ 'bjartelarsen.com', '*bjartelarsen.com', 'app.bjartelarsen.com', 'www.bjartelarsen.com' ]
+, approveDomains: [ 'bjartelarsen.com' ]
 
 , app: app
 
