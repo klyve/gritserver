@@ -2,8 +2,10 @@
 
 let express     = require('express'),
     bodyParser  = require('body-parser'),
+    https       = require('https'),
+    http        = require('http'),
     app         = express(),
-    api =       express.Router()
+    api         = express.Router()
 
 let mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/challenge')
@@ -23,16 +25,14 @@ app.all('*', (req,res) => {
   })
 })
 
-require('letsencrypt-express').create({
 
-  server: 'https://acme-v01.api.letsencrypt.org/directory'
+http.createServer(function(req, res) {
+  res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+  res.end();
+}).listen(80);
 
-, email: 'bjartekll555@gmail.com'
-
-, agreeTos: true
-
-, approveDomains: [ 'bjartelarsen.com' ]
-
-, app: app
-
-}).listen(80, 443);
+https.createServer({
+  key: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/privkey1.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/fullchain1.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/chain1.pem")
+}, app).listen(443);
