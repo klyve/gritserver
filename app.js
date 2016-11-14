@@ -36,7 +36,7 @@ require('letsencrypt-express').create({
 
 , agreeTos: true
 
-, approveDomains: [ 'app.bjartelarsen.com' ]
+, approveDomains: [ 'bjartelarsen.com', '*bjartelarsen.com', 'app.bjartelarsen.com', 'www.bjartelarsen.com' ]
 
 , app: app
 
