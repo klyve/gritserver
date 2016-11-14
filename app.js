@@ -30,7 +30,7 @@ app.listen(3000, () => {
 
 require('letsencrypt-express').create({
 
-  server: 'staging'
+  server: 'https://acme-v01.api.letsencrypt.org/directory'
 
 , email: 'bjartekll555@gmail.com'
 
