@@ -8,6 +8,7 @@ let express     = require('express'),
     app         = express(),
     api         = express.Router()
 
+
 let mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/challenge')
 // Body parser
@@ -25,15 +26,17 @@ app.all('*', (req,res) => {
     "error_message": "Bad request, 404 not found"
   })
 })
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
+})
 
-
-http.createServer(function(req, res) {
-  res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-  res.end();
-}).listen(80);
-
-https.createServer({
-  key: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/privkey1.pem"),
-  cert: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/fullchain1.pem"),
-  ca: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/chain1.pem")
-}, app).listen(443);
+// http.createServer(function(req, res) {
+//   res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+//   res.end();
+// }).listen(80);
+//
+// https.createServer({
+//   key: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/privkey1.pem"),
+//   cert: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/fullchain1.pem"),
+//   ca: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/chain1.pem")
+// }, app).listen(443);
