@@ -14,7 +14,7 @@ module.exports = (api) => {
     })
   api.route('/user')
     .post((req, res) => {
-      User.getUser({nick: req.body.nick}, function(err, data) {
+      User.getUser({nick: req.body.username}, function(err, data) {
         if(data.length) {
           return res.send({
             error: true,
