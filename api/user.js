@@ -34,6 +34,8 @@ module.exports = (api) => {
             password: crypto.createHmac('sha256', '').update(req.body.password).digest('hex'),
           }, function(err, data) {
             return res.send({
+              err,
+              data,
               status: 200,
               msg: "User created!"
             })
