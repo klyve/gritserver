@@ -31,7 +31,7 @@ module.exports = (api) => {
           User.createUser({
             number: req.body.number,
             nick: req.body.nick,
-            password: hash.sha256().update(req.data.password).digest('hex');
+            password: hash.sha256().update(req.data.password).digest('hex')
           }, function(err, data) {
             return res.send({
               status: 200,
