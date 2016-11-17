@@ -33,10 +33,16 @@ module.exports = (api) => {
             number: req.body.number,
             password: req.body.password
           }, function(err, data) {
+            if(err) {
+              return res.send({
+                err,
+              })
+            }
+            let token = jwt.sign({ uid: data._id }, 'supersecret');
             return res.send({
-              err,
               data,
               status: 200,
+              token,
               msg: "User created!"
             })
           })
