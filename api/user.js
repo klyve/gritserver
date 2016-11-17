@@ -26,7 +26,7 @@ module.exports = (api) => {
       }, function(err, data) {
         if(err || !data.length) {
 
-          res.send({error: true});
+          res.send({error: true, err});
         }else {
           let token = jwt.sign({ uid: data[0]._id }, 'supersecret');
           res.send({
