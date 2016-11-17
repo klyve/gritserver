@@ -14,11 +14,11 @@ module.exports = (api) => {
 
   api.route('/user/auth')
     .post((req, res) => {
-      let token = jwt.sign({ uid: 'bullshit' }, 'supersecret');
-      return res.send({
-        status: 200,
-        token,
-      })
+      // let token = jwt.sign({ uid: 'bullshit' }, 'supersecret');
+      // return res.send({
+      //   status: 200,
+      //   token,
+      // })
 
       User.getUser({
         number: req.body.username,
@@ -35,9 +35,6 @@ module.exports = (api) => {
           })
         }
       })
-      // User.find({number: '95047857'}).exec(function(err, data) {
-      //   console.log(err, data)
-      // });
     })
 
 }
