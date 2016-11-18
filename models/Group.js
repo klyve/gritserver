@@ -39,8 +39,9 @@ module.exports.getGroups = function(uid, callback) {
 
 module.exports.createGroup = function(data, callback) {
   let user;
-  let userid = mongoose.Schema.ObjectId(jwt.verify(data.token, 'supersecret'));
+  let userid = jwt.verify(data.token, 'supersecret');
   console.log(data, userid);
+  console.log(typeof userid);
   mongoose.model('UserModel').getUser({
     _id: userid
   }, function(err, data) {
