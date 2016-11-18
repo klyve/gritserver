@@ -9,8 +9,8 @@ let bluebird  = require('bluebird'),
 module.exports = (api) => {
 
   api.route('/user/:id')
-    .post((req, res) => {
-      User.getUser({nick: req.body.username}, function(err, data) {
+    .get((req, res) => {
+      User.getUser({nick: req.params.id}, function(err, data) {
         if(data.length) {
           return res.send({
             data
