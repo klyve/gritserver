@@ -43,7 +43,7 @@ module.exports.createGroup = function(data, callback) {
   console.log(data, userid);
   console.log(typeof userid);
   mongoose.model('UserModel').getUser({
-    _id: userid
+    _id: userid.uid
   }, function(err, data) {
     console.log(err, data)
   })
