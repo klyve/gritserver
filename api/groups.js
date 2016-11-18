@@ -54,7 +54,7 @@ module.exports = (api) => {
                 res.send({
                   "status": 200,
                   "message": "Group created",
-                  "groupid": group._id
+                  "groupid": groups._id
                 })
               })
           }) // Create group end
