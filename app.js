@@ -26,7 +26,7 @@ app.all('*', (req,res) => {
     "error_message": "Bad request, 404 not found"
   })
 })
-app.listen(80, function () {
+app.listen(3000, function () {
   console.log('app listening on port 80!')
 })
 

@@ -15,6 +15,13 @@ module.exports = (api) => {
       });
 
     })
+    .post((req, res) => {
+      Group.createGroup(req.body, function(err, groups) {
+        res.send({
+          err, groups
+        })
+      })
+    })
 
 
 }

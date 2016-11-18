@@ -1,5 +1,6 @@
 "use strict";
-let mongoose = require('mongoose');
+let mongoose = require('mongoose'),
+    jwt = require('jsonwebtoken');
 
 
 var GroupSchema = mongoose.Schema({
@@ -37,5 +38,19 @@ module.exports.getGroups = function(uid, callback) {
 }
 
 module.exports.createGroup = function(data, callback) {
-  GroupModel.create(data, callback);
+  let user;
+  let userid = jwt.verify(data.token, 'supersecret');
+  console.log(userid);
+  mongoose.model('UserModel').getUser({
+    _id: userid
+  }, function(err, data) {
+    console.log(err, data)
+  })
+
+  // let groupData = {
+  //   name: data.name,
+  //   admins: [user],
+  //   members: [user]
+  // }
+  //GroupModel.create(data, callback);
 }
