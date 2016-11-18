@@ -1,7 +1,8 @@
 "use strict"
 let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
-    User = require('../models/User.js');
+    User = require('../models/User.js'),
+    jwt = require('jsonwebtoken');
 
 
 module.exports = (api) => {

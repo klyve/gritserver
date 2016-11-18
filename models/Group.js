@@ -1,6 +1,5 @@
 "use strict";
-let mongoose = require('mongoose'),
-    jwt = require('jsonwebtoken');
+let mongoose = require('mongoose');
 
 
 var GroupSchema = mongoose.Schema({
