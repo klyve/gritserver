@@ -40,18 +40,31 @@ module.exports.getGroups = function(uid, callback) {
 module.exports.createGroup = function(data, callback) {
   let user;
   let userid = jwt.verify(data.token, 'supersecret');
-  console.log(data, userid);
-  console.log(typeof userid);
+
   mongoose.model('UserModel').getUser({
     _id: userid.uid
-  }, function(err, data) {
-    console.log(err, data)
+  }, function(err, user) {
+    if(err)
+      return res.send({
+        "error": true,
+        "msg": "Could not find user",
+      })
+      let groupData = {
+        name: data.name,
+        admins: [user[0]._id],
+        members: [user[0]._id]
+      }
+      GroupModel.create(groupData, function(err, group) {
+        if(err)
+          return res.send({
+            "error": true,
+            "msg": "Could not create group"
+          })
+
+          console.log(group);
+      });
   })
 
-  // let groupData = {
-  //   name: data.name,
-  //   admins: [user],
-  //   members: [user]
-  // }
+
   //GroupModel.create(data, callback);
 }
