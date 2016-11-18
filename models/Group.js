@@ -38,47 +38,5 @@ module.exports.getGroups = function(uid, callback) {
 }
 
 module.exports.createGroup = function(data, callback) {
-  let user;
-  let userid = jwt.verify(data.token, 'supersecret');
-
-  mongoose.model('UserModel').getUser({
-    _id: userid.uid
-  }, function(err, user) {
-    if(err)
-      return res.send({
-        "error": true,
-        "msg": "Could not find user",
-      })
-      let groupData = {
-        name: data.name,
-        admins: [user[0]._id],
-        members: [user[0]._id]
-      }
-      GroupModel.create(groupData, function(err, group) {
-        if(err)
-          return res.send({
-            "error": true,
-            "msg": "Could not create group"
-          })
-          mongoose.model('UserModel').updateUser({
-            _id: user[0]._id
-          },{
-            groups:user[0].groups.push(group._id),
-          }, function(err, data) {
-            if(err)
-              return res.send({
-                "error": true,
-                "msg": "Could not join the created group"
-              })
-            res.send({
-              "status": 200,
-              "message": "Group created",
-              "groupid": group._id
-            })
-          })
-      });
-  })
-
-
-  //GroupModel.create(data, callback);
+  GroupModel.create(groupData, callback);
 }
