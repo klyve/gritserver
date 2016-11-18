@@ -40,7 +40,7 @@ module.exports = (api) => {
                 "error": true,
                 "msg": "Could not create group"
               })
-
+              console.log(usr);
               User.updateUser({
                 _id: usr[0]._id
               },{
