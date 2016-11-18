@@ -37,5 +37,5 @@ module.exports.getGroups = function(uid, callback) {
 }
 
 module.exports.createGroup = function(data, callback) {
-  GroupModel.create(groupData, callback);
+  GroupModel.create(data, callback);
 }

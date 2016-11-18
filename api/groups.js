@@ -33,7 +33,7 @@ module.exports = (api) => {
             admins: [usr[0]._id],
             members: [usr[0]._id]
           }
-          Group.createGroup(req.body, function(err, groups) {
+          Group.createGroup(groupData, function(err, groups) {
 
             if(err)
               return res.send({
