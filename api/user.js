@@ -10,12 +10,11 @@ module.exports = (api) => {
 
   api.route('/user/:id')
     .get((req, res) => {
-      User.getUser({nick: req.params.id}, function(err, data) {
-        if(data.length) {
+      console.log(req.params.id)
+      User.getUser({_id: req.params.id}, function(err, data) {
           return res.send({
-            data
+            data, err
           })
-        }
       })
     })
   api.route('/user')
