@@ -7,10 +7,25 @@ let bluebird  = require('bluebird'),
 
 module.exports = (api) => {
 
+  api.route('/groups/:id')
+    .get((req, res) {
+      Group.getGroups({_id: req.params.id}, function(err, groups) {
+        if(err)
+          res.send({
+            error: true,
+            "message": "Could not get the group",
+            err
+          })
+        res.send({
+          groups
+        })
+      })
+    })
+
   api.route('/groups')
     .get((req, res) => {
 
-      Group.getGroups('i', function(err, groups) {
+      Group.getGroups({}, function(err, groups) {
         res.send({
           groups
         })
@@ -30,6 +45,7 @@ module.exports = (api) => {
           })
           let groupData = {
             name: req.body.name,
+            type: req.body.type,
             admins: [usr[0]._id],
             members: [usr[0]._id]
           }

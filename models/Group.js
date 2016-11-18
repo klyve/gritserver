@@ -7,6 +7,11 @@ var GroupSchema = mongoose.Schema({
       type: String,
       required: true,
     },
+    type: {
+      type: String,
+      required: true,
+      default: 'private'
+    },
     image: {
       type: String,
     },
@@ -31,9 +36,9 @@ var GroupSchema = mongoose.Schema({
 let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema);
 
 
-module.exports.getGroups = function(uid, callback) {
+module.exports.getGroups = function(query, callback) {
   //mongoose.
-  GroupModel.find(callback);
+  GroupModel.find(query, callback);
 }
 
 module.exports.createGroup = function(data, callback) {
