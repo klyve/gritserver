@@ -11,6 +11,7 @@ Group.remove({}, function( ){
       bio: 'Hello world'+i,
       image: 'https://unsplash.it/400/400/?random',
       members: [],
+      type: "public",
       admins: [],
       challenges: []
     }, function(err, data) {
@@ -24,7 +25,7 @@ User.remove({}, function() {
     nick: 'klyve',
     number: '95047857',
     password: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
-    
+
   }, function(err, data) {
     console.log("Created user");
   })
