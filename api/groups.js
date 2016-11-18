@@ -52,7 +52,7 @@ module.exports = (api) => {
             image: 'https://unsplash.it/400/400/?random',
             challenges: []
           }
-          Group.createGroup(groupData, function(err, groups) {
+          Group.createGroup(groupData, function(err, grp) {
 
             if(err)
               return res.send({
@@ -60,10 +60,12 @@ module.exports = (api) => {
                 "msg": "Could not create group"
               })
               console.log(usr);
+              let grp = usr[0].groups.push(grp._id);
+              console.log(grp)
               User.updateUser({
                 _id: usr[0]._id
               },{
-                groups: usr[0].groups.push(groups._id),
+                groups: grp,
               }, function(err, data) {
                 if(err)
                   return res.send({
@@ -73,7 +75,7 @@ module.exports = (api) => {
                 res.send({
                   "status": 200,
                   "message": "Group created",
-                  "group": groups
+                  "group": grp
                 })
               })
           }) // Create group end
