@@ -45,7 +45,7 @@ module.exports = (api) => {
           })
           let groupData = {
             name: req.body.name,
-            type: req.body.type,
+            grouptype: req.body.type,
             admins: [usr[0]._id],
             members: [usr[0]._id],
             bio: 'Hello world',

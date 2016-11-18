@@ -11,6 +11,7 @@ Group.remove({}, function( ){
       bio: 'Hello world'+i,
       image: 'https://unsplash.it/400/400/?random',
       members: [],
+      grouptype: 'public',
       admins: [],
       challenges: []
     }, function(err, data) {
