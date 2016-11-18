@@ -25,7 +25,7 @@ module.exports = (api) => {
   api.route('/groups')
     .get((req, res) => {
 
-      Group.getGroups({}, function(err, groups) {
+      Group.getGroups('i', function(err, groups) {
         res.send({
           groups
         })
