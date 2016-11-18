@@ -10,7 +10,6 @@ var GroupSchema = mongoose.Schema({
     type: {
       type: String,
       required: true,
-      default: 'private'
     },
     image: {
       type: String,
