@@ -47,7 +47,10 @@ module.exports = (api) => {
             name: req.body.name,
             type: req.body.type,
             admins: [usr[0]._id],
-            members: [usr[0]._id]
+            members: [usr[0]._id],
+            bio: 'Hello world',
+            image: 'https://unsplash.it/400/400/?random',
+            challenges: []
           }
           Group.createGroup(groupData, function(err, groups) {
 
