@@ -39,7 +39,7 @@ module.exports.getGroups = function(uid, callback) {
 
 module.exports.createGroup = function(data, callback) {
   let user;
-  let userid = Schema.ObjectId(jwt.verify(data.token, 'supersecret'));
+  let userid = mongoose.Schema.ObjectId(jwt.verify(data.token, 'supersecret'));
   console.log(data, userid);
   mongoose.model('UserModel').getUser({
     _id: userid
