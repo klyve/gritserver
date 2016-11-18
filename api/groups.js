@@ -44,7 +44,7 @@ module.exports = (api) => {
               User.updateUser({
                 _id: usr[0]._id
               },{
-                groups: usr[0].groups.push(group._id),
+                groups: usr[0].groups.push(groups._id),
               }, function(err, data) {
                 if(err)
                   return res.send({
