@@ -10,7 +10,13 @@ module.exports = (api) => {
 
   api.route('/user/:id')
     .get((req, res) => {
-      res.send("Get a user!")
+      User.getUser({nick: req.body.username}, function(err, data) {
+        if(data.length) {
+          return res.send({
+            data
+          })
+        }
+      })
     })
   api.route('/user')
     .post((req, res) => {
