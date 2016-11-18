@@ -41,11 +41,11 @@ module.exports.createGroup = function(data, callback) {
   let user;
   let userid = jwt.verify(data.token, 'supersecret');
   console.log(data, userid);
-  mongoose.model('UserModel').getUser({
-    _id: userid
-  }, function(err, data) {
-    console.log(err, data)
-  })
+  // mongoose.model('UserModel').getUser({
+  //   _id: userid
+  // }, function(err, data) {
+  //   console.log(err, data)
+  // })
 
   // let groupData = {
   //   name: data.name,
