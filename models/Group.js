@@ -60,8 +60,22 @@ module.exports.createGroup = function(data, callback) {
             "error": true,
             "msg": "Could not create group"
           })
-
-          console.log(group);
+          mongoose.model('UserModel').updateUser({
+            _id: user[0]._id
+          },{
+            groups:user[0].groups.push(group._id),
+          }, function(err, data) {
+            if(err)
+              return res.send({
+                "error": true,
+                "msg": "Could not join the created group"
+              })
+            res.send({
+              "status": 200,
+              "message": "Group created",
+              "groupid": group._id
+            })
+          })
       });
   })
 

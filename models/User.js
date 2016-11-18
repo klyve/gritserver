@@ -42,6 +42,9 @@ module.exports.getUsers = function(uid, callback) {
 module.exports.getUser = function(data, callback) {
   UserModel.find(data, callback);
 }
+module.exports.updateUser = function(user, data, callback) {
+  UserModel.update(user, data, callback);
+}
 module.exports.createUser = function(data, callback) {
   UserModel.create(data, callback);
 }
