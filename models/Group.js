@@ -32,6 +32,7 @@ let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema);
 
 
 module.exports.getGroups = function(uid, callback) {
+  //mongoose.
   GroupModel.find(callback);
 }
 
