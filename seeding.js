@@ -30,7 +30,22 @@ Group.remove({}, function( ){
 //     console.log("Created user");
 //   })
 // })
+  User.createUser({
+    nick: 'klyve2',
+    number: '95047857',
+    password: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
 
+  }, function(err, data) {
+    console.log("Created user");
+  })
+  User.createUser({
+    nick: 'klyve3',
+    number: '95047857',
+    password: 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3',
+
+  }, function(err, data) {
+    console.log("Created user");
+  })
 
 
 console.log("Completed seeding");

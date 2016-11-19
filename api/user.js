@@ -17,6 +17,34 @@ module.exports = (api) => {
           })
       })
     })
+  api.route('/user/data')
+    .post((req, res) => {
+      //let userid = jwt.verify(req.body.token, 'supersecret');
+      let userid = req.body.token; // For debugging
+      console.log(userid)
+
+      User.getUser({_id: userid}, function(err,data) {
+        if(err || !data)
+          return res.send({
+            error: true,
+            message: "Could not find the user"
+          })
+        let usr = data;
+        let friends = usr.friends.map((friend) => {
+          User.getUser({_id: friend}, function(err, data) {
+            if(data)
+              return {
+                _id: data.id,
+                nick: data.nick,
+                image: data.image || "",
+              }
+          })
+        })
+        usr.friends = friends;
+        return res.send(usr)
+
+      })
+    })
   api.route('/user')
     .post((req, res) => {
       User.getUser({nick: req.body.username}, function(err, data) {

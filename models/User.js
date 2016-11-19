@@ -40,7 +40,7 @@ module.exports.getUsers = function(uid, callback) {
   UserModel.find(callback);
 }
 module.exports.getUser = function(data, callback) {
-  UserModel.find(data, callback);
+  UserModel.findOne(data, callback);
 }
 module.exports.updateUser = function(user, data, callback) {
   UserModel.update(user, data, callback);
