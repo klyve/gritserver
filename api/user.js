@@ -40,6 +40,9 @@ module.exports = (api) => {
               }
           })
         })
+        let groups = usr.friends.map((group) => {
+          
+        })
         usr.friends = friends;
         return res.send(usr)
 
