@@ -61,12 +61,12 @@ module.exports = (api) => {
               })
               console.log(usr);
               //let grp = usr[0].groups.push(grp._id);
-              let grp = [],
+              //let grp = [],
               console.log(grp)
               User.updateUser({
                 _id: usr[0]._id
               },{
-                groups: grp,
+                groups: [],
               }, function(err, data) {
                 if(err)
                   return res.send({
