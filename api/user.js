@@ -55,7 +55,12 @@ module.exports = (api) => {
         })
       })
     })
-
+  api.route('/user/notifications')
+    .post((req, res) => {
+      res.send({
+        notifications: Math.floor(Math.random() * 6),
+      })
+    })
   api.route('/user/auth')
     .post((req, res) => {
       // let token = jwt.sign({ uid: 'bullshit' }, 'supersecret');
