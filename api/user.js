@@ -50,14 +50,14 @@ module.exports = (api) => {
   api.route('/user')
     .post((req, res) => {
       User.getUser({nick: req.body.username}, function(err, data) {
-        if(data.length) {
+        if(data) {
           return res.send({
             error: true,
             error_msg: "Nickname in use",
           })
         }
         User.getUser({number: req.body.number}, function(err, data) {
-          if(data.length)
+          if(data)
             return res.send({
               error: true,
               error_msg: "Phone number in use",
@@ -107,7 +107,7 @@ module.exports = (api) => {
         number: req.body.username,
         password: req.body.password,
       }, function(err, data) {
-        if(err || !data.length) {
+        if(err || !data) {
           res.send({error: true});
         }else {
           let token = jwt.sign({ uid: data[0]._id }, 'supersecret');
