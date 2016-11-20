@@ -66,7 +66,11 @@ module.exports = (api) => {
           User.createUser({
             nick: req.body.username,
             number: req.body.number,
-            password: req.body.password
+            password: req.body.password,
+            bio: "",
+            image: "https://scontent-arn2-1.xx.fbcdn.net/v/t1.0-9/13346786_857665671010201_2266055122162485673_n.jpg?oh=058821f76744a088aff31f6813d19952&oe=58C41549",
+            friends: [],
+            groups: []
           }, function(err, data) {
             if(err) {
               return res.send({
