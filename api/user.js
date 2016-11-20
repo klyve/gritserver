@@ -27,6 +27,7 @@ module.exports = (api) => {
 
 
       User.getUser({_id: userid}, function(err,data) {
+        console.log(err, data);
         if(err || !data)
           return res.send({
             error: true,
