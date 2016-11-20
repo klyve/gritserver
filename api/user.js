@@ -20,14 +20,14 @@ module.exports = (api) => {
     })
   api.route('/user/data')
     .post((req, res) => {
-      let userid = jwt.verify(req.body.token, 'supersecret');
+      let userid = jwt.verify(req.body.token, 'supersecret').uid;
       //let userid = req.body.token; // For debugging
-      console.log(typeof userid);
+
       //userid.toString()
 
 
       User.getUser({_id: userid}, function(err,data) {
-        console.log(err, data);
+        //console.log(err, data);
         if(err || !data)
           return res.send({
             error: true,
