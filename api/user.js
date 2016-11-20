@@ -20,8 +20,7 @@ module.exports = (api) => {
     })
   api.route('/user/find')
     .post((req, res) => {
-      let text = req.body.text;
-      console.log(req.body)
+      let text = req.body.search.text;
       User.getUsers({nick:  new RegExp('^'+text+'(.*)$', "i")}, function(err, data) {
         console.log(err, data);
         if(err)
