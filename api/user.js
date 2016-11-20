@@ -26,9 +26,8 @@ module.exports = (api) => {
       //userid.toString()
 
 
-      User.getUser({_id: $in:userid}, function(err,data) {
-        if(err || !data) {
-          //console.log(err, data);
+      User.getUser({_id: userid}, function(err,data) {
+        if(err || !data)
           return res.send({
             error: true,
             message: "Could not find the user"
