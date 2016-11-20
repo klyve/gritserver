@@ -18,6 +18,21 @@ module.exports = (api) => {
           })
       })
     })
+  api.route('/user/find')
+    .post((req, res) => {
+
+      User.getUsers({nick:  new RegExp('^'+req.body.search+'(.*)$', "i")}, function(err, data) {
+        if(err)
+          return res.send({
+            "error": true,
+            "error_message": "Could not fetch users"
+          })
+        return res.send({
+          users: data,
+          search: req.body.search
+        })
+      })
+    })
   api.route('/user/data')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
