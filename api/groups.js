@@ -46,8 +46,8 @@ module.exports = (api) => {
           let groupData = {
             name: req.body.name,
             grouptype: req.body.type,
-            admins: [usr[0]._id],
-            members: [usr[0]._id],
+            admins: [usr._id],
+            members: [usr._id],
             bio: 'Hello world',
             image: 'https://unsplash.it/400/400/?random',
             challenges: []
@@ -64,7 +64,7 @@ module.exports = (api) => {
               //let grp = [],
               console.log(grp)
               User.updateUser({
-                _id: usr[0]._id
+                _id: usr._id
               },{
                 groups: [],
               }, function(err, data) {
