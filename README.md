@@ -5,7 +5,7 @@
 ####Install server on macOS Sierra 10.12.1
 *20.11.2016*
 
-1. Install homebrew - paste following in terminal: 
+1. Install homebrew - paste following in terminal:
 
 ```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -23,7 +23,7 @@ brew install mongodb
 
 4\. Install node.js
 ```bash
-brew install npm install
+brew install node
 ```
 
 5\. Launch mongod
