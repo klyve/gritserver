@@ -22,11 +22,13 @@ module.exports = (api) => {
     .post((req, res) => {
 
       User.getUsers({nick:  new RegExp('^'+req.body.search+'(.*)$', "i")}, function(err, data) {
+        console.log(err, data);
         if(err)
           return res.send({
             "error": true,
             "error_message": "Could not fetch users"
           })
+
         return res.send({
           users: data,
           search: req.body.search
