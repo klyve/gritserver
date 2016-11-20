@@ -1,7 +1,6 @@
 "use strict";
 let mongoose = require('mongoose');
 
-
 var ChallengeSchema = mongoose.Schema({
 
     name: {
