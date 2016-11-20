@@ -26,34 +26,51 @@ brew install mongodb
 brew install node
 ```
 
-5\. Launch mongod
+5\. Install node.js package that makes live reloading of npm server possible
 ```bash
-sudo mongod
+npm install -g nodemon
 ```
 
-6\. Navigate to directory were you want server to reside. Example:
+6\. Make system MongoDb data-file
+```bash
+sudo mkdir -p /data/db
+```
+
+7\. Navigate to directory were you want server to reside, for instance:
 ```bash
 cd ~/GitHub
 ```
 
-7\. Clone server repo from git
+8\. Clone server repo from git
 ```bash
 git clone git@github.com:klyve/challengeserver.git
 ```
-8\. Move into server
+
+9\. Move into server
 ```bash
 cd challangeserver
 ```
 
-9\. Launch server using node.js
+10\. Install local node.js packages
 ```bash
-npm start
+npm install
 ```
-10\. Enjoy!
+
+11\. Launch mongod from a separate terminal window and let it run
+```bash
+sudo mongod
+```
+
+12\. Launch server using nodemon in project folder
+```bash
+nodemon app.js
+```
+
+13\. Enjoy!
 
 &nbsp;
 
-####Tree structure
+####Project tree structure
 
 >- api
     + group.js
