@@ -2,6 +2,7 @@
 
 let bluebird  = require('bluebird'),
     User = require('../models/User.js'),
+    Group = require('../models/Group.js'),
     jwt = require('jsonwebtoken'),
     crypto = require('crypto')
 
@@ -30,21 +31,19 @@ module.exports = (api) => {
             message: "Could not find the user"
           })
         let usr = data;
-        let friends = usr.friends.map((friend) => {
-          User.getUser({_id: friend}, function(err, data) {
-            if(data)
-              return {
-                _id: data.id,
-                nick: data.nick,
-                image: data.image || "",
-              }
-          })
+        User.getUsers({_id: {$in:data.friends}}, function(err, friendsData) {
+          if(friendsData)
+            data.friends = friendsData;
+
+            Group.getGroups({_id: {$in:data.groups}}, function(err, groupsData) {
+              if(groupsData)
+                data.groups = groupsData;
+
+              return res.send(usr)
+            })
+
         })
-        let groups = usr.friends.map((group) => {
-          
-        })
-        usr.friends = friends;
-        return res.send(usr)
+
 
       })
     })
