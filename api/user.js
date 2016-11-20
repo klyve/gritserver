@@ -111,10 +111,11 @@ module.exports = (api) => {
           res.send({error: true});
         }else {
           let token = jwt.sign({ uid: data._id }, 'supersecret');
-          res.send({
+          let d = {
             status: 200,
             token,
-          })
+          }
+          res.send(d)
         }
       })
     })
