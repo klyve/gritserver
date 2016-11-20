@@ -14,19 +14,19 @@ mongoose.connect('mongodb://127.0.0.1:27017/challenge')    // Connecting to loca
 // Body parser
 app.use(bodyParser.urlencoded({ extended: false }))        // ??
 app.use(bodyParser.json())                                 // ??
- 
+
 require('./api/groups')(api);                         // require group and user module
 require('./api/user')(api);                           // and puts them in api ????
 // Enable the api
 app.use('/api', api)                                  // ??
 
 app.all('*', (req,res) => {                           // Sets up an error message for alle routes in domain
-  res.send({                                          // Req = request object which contains payload from client 
+  res.send({                                          // Req = request object which contains payload from client
     "error": "bad_request",                           // Res = result object that is sent back to client
     "error_message": "Bad request, 404 not found"
   })
 })
-app.listen(3000, function () {                        // app listen 3000ms ???
+app.listen(80, function () {
   console.log('app listening on port 80!')
 })
 
