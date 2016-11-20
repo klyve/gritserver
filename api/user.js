@@ -22,11 +22,13 @@ module.exports = (api) => {
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret');
       //let userid = req.body.token; // For debugging
-      console.log(userid)
+      console.log(typeof userid);
+      //userid.toString()
 
-      User.getUser({_id: userid}, function(err,data) {
+
+      User.getUser({_id: $in:userid}, function(err,data) {
         if(err || !data) {
-          console.log(err, data);
+          //console.log(err, data);
           return res.send({
             error: true,
             message: "Could not find the user"
