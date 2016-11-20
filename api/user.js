@@ -20,9 +20,9 @@ module.exports = (api) => {
     })
   api.route('/user/data')
     .post((req, res) => {
-      //let userid = jwt.verify(req.body.token, 'supersecret');
-      let userid = req.body.token; // For debugging
-      console.log(userid)
+      let userid = jwt.verify(req.body.token, 'supersecret');
+      //let userid = req.body.token; // For debugging
+      //console.log(userid)
 
       User.getUser({_id: userid}, function(err,data) {
         if(err || !data)
