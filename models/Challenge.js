@@ -23,9 +23,9 @@ var ChallengeSchema = mongoose.Schema({
     endtime: {
         type: Date,
         required: true,
-        default: ( Date.now() / 1000 * 3600 * 24 ),
+        default: ((Date.now / 1000) + ( 3600 * 24 )),
     },
 
 });
 
-let ChallangeModel = module.exports = mongoose.model('ChallangeModel', ChallangeSchema, 'challanges');
+let ChallengeModel = module.exports = mongoose.model('ChallengeModel', ChallengeSchema, 'challenges');
