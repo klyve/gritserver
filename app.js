@@ -1,32 +1,32 @@
 "use strict"
 
-let express     = require('express'),
-    bodyParser  = require('body-parser'),
-    https       = require('https'),
-    http        = require('http'),
-    fs          = require('fs'),
-    app         = express(),
-    api         = express.Router()
+let express     = require('express'),       // Node web framework from http://expressjs.com
+    bodyParser  = require('body-parser'),   // Parse incoming request bodies in a middleware before your handlers.  https://github.com/expressjs/body-parser
+    https       = require('https'),         // HTTPS module from https://nodejs.org/api/https.html
+    http        = require('http'),          // HTTP  module from https://nodejs.org/api/http.html
+    fs          = require('fs'),            // File I/O     from https://nodejs.org/api/fs.html
+    app         = express(),                // Init app. Demo: app.get('/', function(req, res) {   })
+    api         = express.Router()          // Confusing object that can do the same as app in some instances.
+                                            //   Can only perform middleware and routing functions
 
-
-let mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1:27017/challenge')
+let mongoose = require('mongoose')                         // mongoDB library form http://mongoosejs.com
+mongoose.connect('mongodb://127.0.0.1:27017/challenge')    // Connecting to localhost database
 // Body parser
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
-
-require('./api/groups')(api);
-require('./api/user')(api);
+app.use(bodyParser.urlencoded({ extended: false }))        // ??
+app.use(bodyParser.json())                                 // ??
+ 
+require('./api/groups')(api);                         // require group and user module
+require('./api/user')(api);                           // and puts them in api ????
 // Enable the api
-app.use('/api', api)
+app.use('/api', api)                                  // ??
 
-app.all('*', (req,res) => {
-  res.send({
-    "error": "bad_request",
+app.all('*', (req,res) => {                           // Sets up an error message for alle routes in domain
+  res.send({                                          // Req = request object which contains payload from client 
+    "error": "bad_request",                           // Res = result object that is sent back to client
     "error_message": "Bad request, 404 not found"
   })
 })
-app.listen(3000, function () {
+app.listen(3000, function () {                        // app listen 3000ms ???
   console.log('app listening on port 80!')
 })
 
