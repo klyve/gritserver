@@ -20,8 +20,7 @@ module.exports = (api) => {
     })
   api.route('/user/find')
     .post((req, res) => {
-      console.log(req.body)
-      User.getUsers({nick:  new RegExp('^'+req.body.text+'(.*)$', "i")}, function(err, data) {
+      User.getUsers({nick:  new RegExp('^'+req.body.text.toString()+'(.*)$', "i")}, function(err, data) {
         console.log(err, data);
         if(err)
           return res.send({
