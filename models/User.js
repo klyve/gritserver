@@ -36,8 +36,8 @@ var UserSchema = mongoose.Schema({
 let UserModel = module.exports = mongoose.model('UserModel', UserSchema, 'users');
 
 
-module.exports.getUsers = function(uid, callback) {
-  UserModel.find(callback);
+module.exports.getUsers = function(data, callback) {
+  UserModel.find(data, callback);
 }
 module.exports.getUser = function(data, callback) {
   UserModel.findOne(data, callback);
