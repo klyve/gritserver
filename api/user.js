@@ -32,7 +32,6 @@ module.exports = (api) => {
             error: true,
             message: "Could not find the user"
           })
-        }
 
         let usr = data;
         User.getUsers({_id: {$in:data.friends}}, function(err, friendsData) {
