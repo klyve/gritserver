@@ -11,12 +11,12 @@ module.exports = (api) => {
     .post((req, res) => {
       Group.getGroups({_id: req.params.id}, function(err, groups) {
         if(err)
-          res.send({
+          return res.send({
             error: true,
             "message": "Could not get the group",
             err
           })
-        res.send({
+        return res.send({
           groups
         })
       })
