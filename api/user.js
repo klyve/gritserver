@@ -207,6 +207,7 @@ module.exports = (api) => {
             sendData.push({
               _id: notification.sender,
               reciever: notification.reciever,
+              senderId: notification.sender,
               sender: {},
               type: notification.type,
               message: notification.message,
@@ -214,7 +215,6 @@ module.exports = (api) => {
               read: notification.read,
             })
           })
-          console.log(data);
 
 
           User.getUsers({_id: {$in:users}}, function(err, friendsData) {
@@ -222,10 +222,14 @@ module.exports = (api) => {
               return res.send({
                 notifications: []
               })
-            friendsData.map((friend, i) => {
-              sendData[i].sender = friend;
+            sendData.map(notification => {
+              friendsData.map((friend, i) => {
+                if(notification.senderId == friend._id) {
+                  notification.sender = friend;
+                }
+              })
             })
-            console.log(sendData);
+
 
             return res.send({
               notifications: sendData
