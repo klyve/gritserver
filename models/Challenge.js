@@ -1,5 +1,7 @@
 "use strict";
 
+let mongoose = require('mongoose');
+
 var ChallengeSchema = mongoose.Schema({
 
     name: {
@@ -26,4 +28,5 @@ var ChallengeSchema = mongoose.Schema({
 
 });
                                     // All models should be called <name>Model for consistency.
+
 let ChallengeModel = module.exports = mongoose.model('ChallengeModel', ChallengeSchema, 'challenges');
