@@ -8,7 +8,14 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
+  api.route('/user/addFriend')
+    .post((req, res) => {
+      
+    })
+  api.route('/user/removeFriend')
+    .post((req, res) => {
 
+    })
   api.route('/user/:id')
     .get((req, res) => {
       console.log(req.params.id)
