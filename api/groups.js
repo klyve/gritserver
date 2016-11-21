@@ -8,17 +8,21 @@ let bluebird  = require('bluebird'),
 module.exports = (api) => {
 
   api.route('/groups/search')
-    .post((req, res) => {                                                     // req, res REUIRED parameters in post/get
-      let text = req.body.text;                                        // err, returnobject REQUIRE paramters in the callback function from mongoose
-      //Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups) {
-      Group.getGroups({name: text}, function(err, groups) {
+    .post((req, res) => {
+      let text = req.body.text;
+      if(text == "")
+        return res.send({
+          error: "",
+          error_message: "Cannot do an empty search"
+        })
+      Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups) {
         if(err)
           return res.send({
             error: true,
             "message": "/groups/search not available",
             err
           })
-        res.send({
+        return res.send({
           groups
         })
       })
