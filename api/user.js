@@ -132,8 +132,13 @@ module.exports = (api) => {
     })
   api.route('/user/data')
     .post((req, res) => {
-      let userid = jwt.verify(req.body.token, 'supersecret').uid;
-      console.log(req.body.token, userid)
+      try {
+        let userid = jwt.verify(req.body.token, 'supersecret').uid;
+        console.log(req.body.token, userid)
+      }catch(err) {
+        console.log(err)
+        let userid=undefined;
+      }
       //let userid = req.body.token; // For debugging
 
       //userid.toString()
