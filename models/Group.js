@@ -41,7 +41,7 @@ let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'gro
 module.exports.joinGroup = function(id, mid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
-    {$push: {"members.id": mid, "members.points": 0}},
+    {$push: {members: mid, "leaderboard.id": mid, "leaderboard.points": 0}},
     {safe: true, upsert: true},
     callback
   )
