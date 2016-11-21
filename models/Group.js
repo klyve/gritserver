@@ -26,7 +26,7 @@ var GroupSchema = mongoose.Schema({
       },
       points: {
         type: Number,
-        default 0
+        default: 0
       }
     }],
     admins: {
