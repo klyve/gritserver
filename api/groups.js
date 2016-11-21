@@ -118,7 +118,7 @@ module.exports = (api) => {
               })
               //let grp = usr[0].groups.push(grp._id);
               //let grp = [],
-              User.joinGroup(userid.uid, grp._id, function(err, data) {
+              User.joinGroup(usr._id, grp._id, function(err, data) {
                 if(err)
                   return res.send({
                     "error": true,
