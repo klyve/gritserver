@@ -37,6 +37,7 @@ module.exports = (api) => {
           return res.send({
             error: "Could not get the group!"
           })
+          console.log(data)
           let ret = {
             _id: data._id,
             name: data.name,
