@@ -116,15 +116,9 @@ module.exports = (api) => {
                 "error": true,
                 "msg": "Could not create group"
               })
-              console.log(usr);
               //let grp = usr[0].groups.push(grp._id);
               //let grp = [],
-              console.log(grp)
-              User.updateUser({
-                _id: usr._id
-              },{
-                groups: [],
-              }, function(err, data) {
+              User.joinGroup(userid.uid, grp._id, function(err, data) {
                 if(err)
                   return res.send({
                     "error": true,
