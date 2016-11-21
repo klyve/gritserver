@@ -80,6 +80,14 @@ module.exports.addFriend = function(id, fid, callback) {
     callback
   )
 }
+module.exports.joinGroup = function(id, gid, callback) {
+  UserModel.findByIdAndUpdate(
+    id,
+    {$push: {"groups": gid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.updateById = function(id, data, callback) {
 //   UserModel.findByIdAndUpdate(
 //     id,

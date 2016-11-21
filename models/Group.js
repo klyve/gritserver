@@ -34,7 +34,14 @@ var GroupSchema = mongoose.Schema({
                                 // All models should be called <name>Model for consistency.
 let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'groups');
 
-
+module.exports.joinGroup = function(id, mid, callback) {
+  UserModel.findByIdAndUpdate(
+    id,
+    {$push: {"members": mid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.getGroups = function(query, callback) {
   GroupModel.find(query, callback);
 }

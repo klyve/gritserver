@@ -45,15 +45,15 @@ module.exports = (api) => {
     })
   api.route('/groups/join')
     .post((req, res) => {
+      let userid = jwt.verify(req.body.token, 'supersecret').uid;
 
-      Group.joinGroup({_id: req.props.id}, function(err, group) {
+      Group.joinGroup(req.props.id, userid, function(err, group) {
         if(err)
           return res.send({
             error: true,
             message: "Could not join group!",
             err
           })
-        let userid = jwt.verify(req.body.token, 'supersecret').uid;
 
         User.joinGroup(userid, req.props._id, function(err, status) {
           if(err)
