@@ -11,8 +11,8 @@ let bluebird  = require('bluebird'),
 module.exports = (api) => {
   api.route('/user/addfriend')
     .post((req, res) => {
-      //let userid = jwt.verify(req.body.token, 'supersecret').uid;
-      let userid = req.body.token;
+      let userid = jwt.verify(req.body.token, 'supersecret').uid;
+      //let userid = req.body.token;
       let friend = req.body._id;
       Notifications.getNotification({
         sender: friend,
@@ -190,8 +190,8 @@ module.exports = (api) => {
     })
   api.route('/user/notifications')
     .post((req, res) => {
-      let token = req.body.token;
-      //let token = jwt.verify(req.body.token, 'supersecret').uid;
+      //let token = req.body.token;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
       Notifications.getNotifications({
         reciever: token,
         read: false,
