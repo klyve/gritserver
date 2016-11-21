@@ -26,7 +26,7 @@ app.all('*', (req,res) => {                           // Sets up an error messag
   })
 })
 
-app.listen(3000, function () {
+app.listen(80, function () {
   console.log('app listening on port 80!')
 })
 
