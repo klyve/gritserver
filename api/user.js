@@ -147,9 +147,19 @@ module.exports = (api) => {
           })
 
 
-        let usr = Object.create(data);
-        usr.notifications = [];
-        console.log(usr)
+        let usr = {
+          _id: data._id,
+          nick: data.nick,
+          number: data.number,
+          options: data.options,
+          create_date: data.create_date,
+          friends: data.friends,
+          groups: data.groups,
+          bio: data.bio,
+          image: data.image,
+          notifications: []
+        };
+
         User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
           if(friendsData)
             usr.friends = friendsData;
