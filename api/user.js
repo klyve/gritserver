@@ -199,11 +199,10 @@ module.exports = (api) => {
         console.log(err, data);
         if(!data.length)
           return res.send({
-            notifications: 0,
+            notifications: [],
           })
         return res.send({
-          notifications: data.length,
-          data
+          notifications: data
         })
       })
     })
