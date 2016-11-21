@@ -3,6 +3,7 @@ let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
     User = require('../models/User.js'),
     Challenge = require('../models/Challenge.js'),
+    Leaderboard = require('../models/Leaderboard.js'),
     jwt = require('jsonwebtoken');
 
 
@@ -25,7 +26,7 @@ module.exports = (api) => {
             members: [],
             admins: data.admins,
             challenges: [],
-            leaderboard: data.leaderboard,
+            leaderboard: [],
             create_date: data.create_date
           }
 
@@ -51,7 +52,16 @@ module.exports = (api) => {
                 ret.challenges.push(challenge);
               })
 
-              return res.send(ret);
+              Leaderboard.getLeaderboard({groupid: data._id}, function(err, leaderBoardData) {
+                if(!data)
+                  return res.send(ret);
+                leaderBoardData.map(leaderData => {
+                  ret.leaderboard.push(leaderData);
+                })
+
+                return res.send(ret);
+              })
+
             })
           })
 
