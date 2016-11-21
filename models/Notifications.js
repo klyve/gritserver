@@ -15,14 +15,8 @@ var NotificationSchema = mongoose.Schema({
       maxLength: 255,
     },
     type: {
-<<<<<<< HEAD
-        type: String,
-        enum: ['gruppeinvitasjon', 'venneinvitasjon'],
-        required: true,
-=======
       type: String,
       required: true,
->>>>>>> 36e9e9418a6f2d900f45f640cd5d2204524c800b
     },
     message: {
       type: String,
@@ -40,10 +34,6 @@ var NotificationSchema = mongoose.Schema({
     },
 
 });
-<<<<<<< HEAD
-                                      // All models should be called <name>Model for consistency.
-let NotificationModel = module.exports = mongoose.model('NotificationModel', NotificationSchema, 'notifications');
-=======
 
 let NotificationModel = module.exports = mongoose.model('NotificationModel', NotificationSchema, 'notifications');
 
@@ -56,4 +46,3 @@ module.exports.getNotification = function(data, callback) {
 module.exports.getNotifications = function(query, callback) {
   NotificationModel.find(query, callback);
 }
->>>>>>> 36e9e9418a6f2d900f45f640cd5d2204524c800b
