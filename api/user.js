@@ -154,6 +154,47 @@ module.exports = (api) => {
             Group.getGroups({_id: {$in:data.groups}}, function(err, groupsData) {
               if(groupsData)
                 data.groups = groupsData;
+                data.notifications = [];
+                Notifications.getNotifications({
+                  reciever: userid,
+                  read: false,
+                }, function(err, notificationData) {
+                  if(notificationData.length) {
+                    let users = []
+                    let sendData = [];
+                    notificationData.map(notification => {
+                      users.push(notification.sender);
+                      sendData.push({
+                        _id: notification.sender,
+                        reciever: notification.reciever,
+                        senderId: notification.sender,
+                        sender: {},
+                        type: notification.type,
+                        message: notification.message,
+                        timestamp: notification.timestamp,
+                        read: notification.read,
+                      })
+                    })
+
+
+                    User.getUsers({_id: {$in:users}}, function(err, friendsData) {
+                      if(err)
+                        return res.send({
+                          notifications: []
+                        })
+                      sendData.map(notification => {
+                        friendsData.map((friend, i) => {
+                          if(notification.senderId == friend._id) {
+                            notification.sender = friend;
+                          }
+                        })
+                      })
+                      data.notifications = sendData;
+                    })
+
+                  }
+                })
+
 
               return res.send(usr)
             })
