@@ -13,12 +13,15 @@ var GroupSchema = mongoose.Schema({
     },
     image: {
       type: String,
+      default: ""
     },
     bio: {
       type: String,
+      default: ""
     },
     members: {
       type: Array,
+      default: [],
     },
     leaderboard: [{
       id: {
@@ -31,9 +34,11 @@ var GroupSchema = mongoose.Schema({
     }],
     admins: {
       type: Array,
+      default: []
     },
     challenges: {
       type: Array,
+      default: []
     },
     create_date: {
       type: Date,
