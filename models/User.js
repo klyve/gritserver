@@ -31,6 +31,21 @@ var UserSchema = mongoose.Schema({
     create_date: {
       type: Date,
       default: Date.now,
+    },
+
+    options: {
+      friendRequest: {
+        type: Boolean,
+        default: true,
+      },
+      groupRequest: {
+        type: Boolean,
+        default: true,
+      },
+      pushNotifications: {
+        type: Boolean,
+        default: true
+      }
     }
 });
                                 // All models should be called <name>Model for consistency.
