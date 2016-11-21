@@ -171,7 +171,10 @@ module.exports = (api) => {
                   reciever: userid,
                   read: false,
                 }, function(err, notificationData) {
-                  if(notificationData.length) {
+                    if(err)
+                      return res.send({
+                        err
+                      })
                     let users = []
                     let sendData = [];
                     notificationData.map(notification => {
@@ -188,7 +191,6 @@ module.exports = (api) => {
                       })
                     })
 
-                    console.log(notificationData)
 
                     User.getUsers({_id: {$in:users}}, function(err, friendsData) {
                       if(err)
@@ -203,13 +205,13 @@ module.exports = (api) => {
                         })
                       })
                       usr.notifications = sendData;
+
+                      return res.send(usr)
                     })
 
-                  }
                 })
 
 
-              return res.send(usr)
             })
 
         })
