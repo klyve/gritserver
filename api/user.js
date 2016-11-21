@@ -188,6 +188,7 @@ module.exports = (api) => {
                       })
                     })
 
+                    console.log(notificationData)
 
                     User.getUsers({_id: {$in:users}}, function(err, friendsData) {
                       if(err)
