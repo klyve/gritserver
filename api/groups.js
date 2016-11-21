@@ -23,7 +23,7 @@ module.exports = (api) => {
             err
           })
         return res.send({
-          groups
+          searchResults: groups
         })
       })
     })
