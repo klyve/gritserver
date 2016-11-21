@@ -133,6 +133,7 @@ module.exports = (api) => {
   api.route('/user/data')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
+      console.log(req.body.token, userid)
       //let userid = req.body.token; // For debugging
 
       //userid.toString()
@@ -159,7 +160,6 @@ module.exports = (api) => {
           image: data.image,
           notifications: []
         };
-        console.log(usr)
         User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
           if(friendsData)
             usr.friends = friendsData;
