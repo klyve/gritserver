@@ -20,10 +20,7 @@ var GroupSchema = mongoose.Schema({
     members: {
       type: Array,
     },
-    leaderboard: [{
-      id: String,
-      points: Number,
-    }],
+    leaderboard: [{}],
     admins: {
       type: Array,
     },
