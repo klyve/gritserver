@@ -65,7 +65,27 @@ module.exports = (api) => {
     })
   api.route('/user/removeFriend')
     .post((req, res) => {
-
+      //let token = req.body.token;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      let friend = req.body._id;
+      User.removeFriend(token, friend, function(err, data) {
+        if(err)
+          return res.send({
+            error: true,
+            error_message: "Could not remove friend"
+          })
+        User.removeFriend(friend, token, function(err, data) {
+          if(err)
+            return res.send({
+              error: true,
+              error_message: "Could not remove friend"
+            })
+          return res.send({
+            status: 200,
+            message: "Friend removed"
+          })
+        })
+      })
     })
   api.route('/user/:id')
     .get((req, res) => {
