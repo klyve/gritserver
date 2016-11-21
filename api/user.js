@@ -26,7 +26,7 @@ module.exports = (api) => {
         if(err)
           return res.send({
             "error": true,
-            "error_message": "Could not fetch users"
+            "error_message": "Could not fetch users",
           })
 
         return res.send({

@@ -9,17 +9,18 @@ module.exports = (api) => {
 
   api.route('/groups/search')
     .post((req, res) => {                                                     // req, res REUIRED parameters in post/get
-      let text = req.body.search.text;                                        // err, returnobject REQUIRE paramters in the callback function from mongoose
-      Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups){
-          if(err)
-            return res.send({
-              error: true,
-              "message": "/groups/search not available",
-              err
-            })
-          res.send({
-            groups
+      let text = req.body.text;                                        // err, returnobject REQUIRE paramters in the callback function from mongoose
+      //Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups) {
+      Group.getGroups({name: text}, function(err, groups) {
+        if(err)
+          return res.send({
+            error: true,
+            "message": "/groups/search not available",
+            err
           })
+        res.send({
+          groups
+        })
       })
     })
 
@@ -39,6 +40,7 @@ module.exports = (api) => {
     })
 
   api.route('/groups')
+
     .get((req, res) => {
       Group.getGroups('i', function(err, groups) {
         if(err)
@@ -50,9 +52,9 @@ module.exports = (api) => {
         res.send({
           groups
         })
-      });
-
+      })
     })
+
     .post((req, res) => {
 
       let userid = jwt.verify(req.body.token, 'supersecret');
