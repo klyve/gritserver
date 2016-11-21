@@ -36,3 +36,10 @@ let ChallengeModel = module.exports = mongoose.model('ChallengeModel', Challenge
 module.exports.createChallenge = function(data, callback) {
   ChallengeModel.create(data, callback);
 }
+
+module.exports.getChallenge = function(data, callback) {
+  ChallengeModel.findOne(data, callback);
+}
+module.exports.getChallenges = function(data, callback) {
+  ChallengeModel.find(data, callback);
+}

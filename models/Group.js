@@ -20,6 +20,10 @@ var GroupSchema = mongoose.Schema({
     members: {
       type: Array,
     },
+    leaderboard: [{
+      id: String,
+      points: Number,
+    }],
     admins: {
       type: Array,
     },
@@ -37,7 +41,7 @@ let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'gro
 module.exports.joinGroup = function(id, mid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
-    {$push: {"members": mid}},
+    {$push: {"members.id": mid, "members.points": 0}},
     {safe: true, upsert: true},
     callback
   )

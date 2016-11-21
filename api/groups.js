@@ -2,12 +2,62 @@
 let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
     User = require('../models/User.js'),
+    User = require('../models/Challenge.js'),
     Challenge = require('../models/Challenge.js'),
     jwt = require('jsonwebtoken');
 
 
 module.exports = (api) => {
+  api.groups('/groups/getdata')
+    .post((req, res) => {
+      let id = req.body._id
 
+      Group.getGroup({_id: id}, function(err, data) {
+        if(!data)
+          return res.send({
+            error: "Could not get the group!"
+          })
+          let ret = {
+            _id: data._id
+            name: data.name,
+            grouptype: data.grouptype,
+            image: data.image,
+            bio: data.bio,
+            members: [],
+            admins: data.admins,
+            challenges: [],
+            leaderboard: data.leaderboard,
+            create_date: data.create_date
+          }
+
+          User.getUsers({_id: {$in:data.members}}, function(err, memberData) {
+            if(!data)
+              return res.send(ret);
+
+            if(err)
+              console.log(err)
+
+            memberData.map(member => {
+              ret.members.push(member);
+            })
+
+            Challenge.getChallenges({_id: {$in:data.members}}, function(err, challengeData) {
+              if(!data)
+                return res.send(ret)
+
+              if(err)
+                console.log(err)
+                
+              challengeData.map(challenge => {
+                ret.challenges.push(challenge);
+              })
+
+              return res.send(ret);
+            })
+          })
+
+      })
+    })
   api.route('/groups/challenge')
     .post((req, res) => {
       let name = req.body.name;
