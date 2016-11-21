@@ -9,10 +9,10 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
-  api.route('/user/addFriend')
+  api.route('/user/addfriend')
     .post((req, res) => {
-      let userid = jwt.verify(req.body.token, 'supersecret').uid;
-      //let userid = req.body.token;
+      //let userid = jwt.verify(req.body.token, 'supersecret').uid;
+      let userid = req.body.token;
       let friend = req.body._id;
       Notifications.getNotification({
         sender: friend,
@@ -190,20 +190,47 @@ module.exports = (api) => {
     })
   api.route('/user/notifications')
     .post((req, res) => {
-      //let token = req.body.token;
-      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      let token = req.body.token;
+      //let token = jwt.verify(req.body.token, 'supersecret').uid;
       Notifications.getNotifications({
         reciever: token,
         read: false,
       }, function(err, data) {
-        console.log(err, data);
         if(!data.length)
           return res.send({
             notifications: [],
           })
-        return res.send({
-          notifications: data
-        })
+          let users = []
+          let sendData = [];
+          data.map(notification => {
+            users.push(notification.sender);
+            sendData.push({
+              _id: notification.sender,
+              reciever: notification.reciever,
+              sender: {},
+              type: notification.type,
+              message: notification.message,
+              timestamp: notification.timestamp,
+              read: notification.read,
+            })
+          })
+
+
+          User.getUsers({_id: {$in:users}}, function(err, friendsData) {
+            if(err)
+              return res.send({
+                notifications: []
+              })
+            friendsData.map((friend, i) => {
+              sendData[i].sender = friend;
+            })
+
+            return res.send({
+              notifications: sendData
+            })
+          })
+
+
       })
     })
   api.route('/user/auth')
