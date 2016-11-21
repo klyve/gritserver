@@ -42,6 +42,14 @@ module.exports.joinGroup = function(id, mid, callback) {
     callback
   )
 }
+moduke.exports.addChallenge = function(id, cid, callback) {
+  GroupModel.findByIdAndUpdate(
+    id,
+    {$push: {"challenges": cid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.getGroups = function(query, callback) {
   GroupModel.find(query, callback);
 }
