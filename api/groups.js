@@ -47,7 +47,6 @@ module.exports = (api) => {
   api.route('/groups')
 
     .get((req, res) => {
-      let userid = jwt.verify(req.body.token, 'supersecret');
       Group.getGroups({}, function(err, groups) {
         if(err)
           return res.send({
