@@ -2,7 +2,6 @@
 let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
     User = require('../models/User.js'),
-    User = require('../models/Challenge.js'),
     Challenge = require('../models/Challenge.js'),
     jwt = require('jsonwebtoken');
 
@@ -47,7 +46,7 @@ module.exports = (api) => {
 
               if(err)
                 console.log(err)
-                
+
               challengeData.map(challenge => {
                 ret.challenges.push(challenge);
               })
