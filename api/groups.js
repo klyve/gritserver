@@ -15,6 +15,7 @@ module.exports = (api) => {
           error: "",
           error_message: "Cannot do an empty search"
         })
+      console.log(text);
       Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups) {
         if(err)
           return res.send({
