@@ -43,3 +43,6 @@ module.exports.add = function(data, callback) {
 module.exports.getNotification = function(data, callback) {
   NotificationModel.findOne(data, callback);
 }
+module.exports.getNotifications = function(query, callback) {
+  NotificationModel.find(query, callback);
+}
