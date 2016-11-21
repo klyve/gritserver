@@ -214,6 +214,7 @@ module.exports = (api) => {
               read: notification.read,
             })
           })
+          console.log(data);
 
 
           User.getUsers({_id: {$in:users}}, function(err, friendsData) {
@@ -224,6 +225,7 @@ module.exports = (api) => {
             friendsData.map((friend, i) => {
               sendData[i].sender = friend;
             })
+            console.log(sendData);
 
             return res.send({
               notifications: sendData
