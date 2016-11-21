@@ -58,7 +58,7 @@ module.exports = (api) => {
             err
           })
 
-        User.joinGroup(userid, req.props._id, function(err, status) {
+        User.joinGroup(userid, req.body._id, function(err, status) {
           if(err)
             return res.send({
               error: true,
