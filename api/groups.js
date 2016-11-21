@@ -50,7 +50,7 @@ module.exports = (api) => {
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
 
-      Group.joinGroup(req.props.id, userid, function(err, group) {
+      Group.joinGroup(req.body.id, userid, function(err, group) {
         if(err)
           return res.send({
             error: true,
