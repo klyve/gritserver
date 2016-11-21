@@ -53,15 +53,15 @@ module.exports = (api) => {
           User.getUsers({_id: {$in:data.members}}, function(err, memberData) {
             if(!data)
               return res.send(ret);
-
             if(err)
               console.log(err)
 
             memberData.map(member => {
               ret.members.push(member);
             })
+            console.log(member)
 
-            Challenge.getChallenges({_id: {$in:data.members}}, function(err, challengeData) {
+            Challenge.getChallenges({_id: {$in:data.challenges}}, function(err, challengeData) {
               if(!data)
                 return res.send(ret)
 
