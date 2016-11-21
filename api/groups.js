@@ -7,13 +7,29 @@ let bluebird  = require('bluebird'),
 
 module.exports = (api) => {
 
+  api.route('/groups/search')
+    .post((req, res) => {                                                     // req, res REUIRED parameters in post/get
+      let text = req.body.search.text;                                        // err, returnobject REQUIRE paramters in the callback function from mongoose
+      Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups){
+          if(err)
+            return res.send({
+              error: true,
+              "message": "/groups/search not available",
+              err
+            })
+          res.send({
+            groups
+          })
+      })
+    })
+
   api.route('/groups/:id')
     .post((req, res) => {
       Group.getGroups({_id: req.params.id}, function(err, groups) {
         if(err)
-          res.send({
+          return res.send({
             error: true,
-            "message": "Could not get the group",
+            "message": "/groups/:id not available",
             err
           })
         res.send({
@@ -24,8 +40,13 @@ module.exports = (api) => {
 
   api.route('/groups')
     .get((req, res) => {
-
       Group.getGroups('i', function(err, groups) {
+        if(err)
+          return res.send({
+            error: true,
+            "message": "/groups not available",
+            err
+          })
         res.send({
           groups
         })
