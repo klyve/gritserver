@@ -204,7 +204,9 @@ module.exports = (api) => {
                           }
                         })
                       })
-                      usr.notifications = sendData;
+                      sendData.map(udata => {
+                        usr.notifications.push(udata);
+                      })
 
                       return res.send(usr)
                     })
