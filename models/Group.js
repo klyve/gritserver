@@ -31,7 +31,7 @@ var GroupSchema = mongoose.Schema({
       default: Date.now
     }
 });
-
+                                // All models should be called <name>Model for consistency.
 let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'groups');
 
 

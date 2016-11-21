@@ -7,13 +7,34 @@ let bluebird  = require('bluebird'),
 
 module.exports = (api) => {
 
+  api.route('/groups/search')
+    .post((req, res) => {
+      let text = req.body.text;
+      if(text == "")
+        return res.send({
+          error: "",
+          error_message: "Cannot do an empty search"
+        })
+      Group.getGroups({name: new RegExp('^(.*)'+text+'(.*)$', 'i')}, function(err, groups) {
+        if(err)
+          return res.send({
+            error: true,
+            "message": "/groups/search not available",
+            err
+          })
+        return res.send({
+          groups
+        })
+      })
+    })
+
   api.route('/groups/:id')
     .post((req, res) => {
       Group.getGroups({_id: req.params.id}, function(err, groups) {
         if(err)
           return res.send({
             error: true,
-            "message": "Could not get the group",
+            "message": "/groups/:id not available",
             err
           })
         return res.send({
@@ -23,15 +44,21 @@ module.exports = (api) => {
     })
 
   api.route('/groups')
-    .get((req, res) => {
 
+    .get((req, res) => {
       Group.getGroups('i', function(err, groups) {
+        if(err)
+          return res.send({
+            error: true,
+            "message": "/groups not available",
+            err
+          })
         res.send({
           groups
         })
-      });
-
+      })
     })
+
     .post((req, res) => {
 
       let userid = jwt.verify(req.body.token, 'supersecret');
