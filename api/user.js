@@ -148,6 +148,7 @@ module.exports = (api) => {
 
 
         let usr = Object.create(data);
+        usr.notifications = [];
         User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
           if(friendsData)
             usr.friends = friendsData;
@@ -155,7 +156,6 @@ module.exports = (api) => {
             Group.getGroups({_id: {$in:usr.groups}}, function(err, groupsData) {
               if(groupsData)
                 usr.groups = groupsData;
-                usr.notifications = [];
                 Notifications.getNotifications({
                   reciever: userid,
                   read: false,
