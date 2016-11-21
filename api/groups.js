@@ -9,7 +9,7 @@ module.exports = (api) => {
 
   api.route('/groups/search')
     .post((req, res) => {
-      let text = req.body.text;
+      let text = req.body.search.text;
       if(text == "")
         return res.send({
           error: "",
