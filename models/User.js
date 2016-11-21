@@ -33,7 +33,7 @@ var UserSchema = mongoose.Schema({              // why not 'new moongose.Schema'
     }
 });
                                 // All models should be called <name>Model for consistency.
-let UserModel = module.exports = mongoose.model('UserModel', UserSchema, 'users');
+let UserModel = module.exports = mongoose.model('UserModel', UserSchema, 'users');   // module.exports makes the variable global
 
 
 module.exports.getUsers = function(uid, callback) {
