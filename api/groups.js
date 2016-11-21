@@ -95,6 +95,7 @@ module.exports = (api) => {
       let creator = jwt.verify(req.body.token, 'supersecret').uid;
       //let creator = req.body.token;
       let groupid = req.body._id;
+      console.log(req.body)
       Challenge.createChallenge({
         name,
         description,
