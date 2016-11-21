@@ -9,7 +9,7 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
-  api.route('/user/addFriend')
+  api.route('/user/addfriend')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
       //let userid = req.body.token;
@@ -65,7 +65,27 @@ module.exports = (api) => {
     })
   api.route('/user/removeFriend')
     .post((req, res) => {
-
+      //let token = req.body.token;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      let friend = req.body._id;
+      User.removeFriend(token, friend, function(err, data) {
+        if(err)
+          return res.send({
+            error: true,
+            error_message: "Could not remove friend"
+          })
+        User.removeFriend(friend, token, function(err, data) {
+          if(err)
+            return res.send({
+              error: true,
+              error_message: "Could not remove friend"
+            })
+          return res.send({
+            status: 200,
+            message: "Friend removed"
+          })
+        })
+      })
     })
   api.route('/user/:id')
     .get((req, res) => {
@@ -176,15 +196,47 @@ module.exports = (api) => {
         reciever: token,
         read: false,
       }, function(err, data) {
-        console.log(err, data);
         if(!data.length)
           return res.send({
-            notifications: 0,
+            notifications: [],
           })
-        return res.send({
-          notifications: data.length,
-          data
-        })
+          let users = []
+          let sendData = [];
+          data.map(notification => {
+            users.push(notification.sender);
+            sendData.push({
+              _id: notification.sender,
+              reciever: notification.reciever,
+              senderId: notification.sender,
+              sender: {},
+              type: notification.type,
+              message: notification.message,
+              timestamp: notification.timestamp,
+              read: notification.read,
+            })
+          })
+
+
+          User.getUsers({_id: {$in:users}}, function(err, friendsData) {
+            if(err)
+              return res.send({
+                notifications: []
+              })
+            sendData.map(notification => {
+              friendsData.map((friend, i) => {
+                if(notification.senderId == friend._id) {
+                  notification.sender = friend;
+                }
+              })
+            })
+
+
+            return res.send({
+              notifications: sendData
+            })
+          })
+
+
       })
     })
   api.route('/user/auth')

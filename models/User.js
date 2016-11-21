@@ -45,6 +45,14 @@ module.exports.getUser = function(data, callback) {
 module.exports.updateUser = function(user, data, callback) {
   UserModel.update(user, { $set: data }, callback);
 }
+module.exports.removeFriend = function(id, fid, callback) {
+  UserModel.findByIdAndUpdate(
+    id,
+    {$pull: {"friends": fid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.addFriend = function(id, fid, callback) {
   UserModel.findByIdAndUpdate(
     id,
