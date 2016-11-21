@@ -12,14 +12,23 @@ module.exports = (api) => {
     .post((req, res) => {
       let name = req.body.name;
       let description = req.body.description;
+      let time = req.body.time;
       let creator = jwt.verify(req.body.token, 'supersecret').uid;
-
+      //let creator = req.body.token;
+      let groupid = req.body._id;
       Challenge.createChallenge({
         name,
         description,
         creator,
+        time,
       }, function(err, data) {
-
+        Group.addChallenge(groupid, data._id, function(err, cdata) {
+          if(!cdata)
+            return res.send({
+              error: "Could not add challenge"
+            })
+          res.send(cdata);
+        })
       })
     })
 

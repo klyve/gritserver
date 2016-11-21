@@ -23,10 +23,9 @@ var ChallengeSchema = mongoose.Schema({
         type: String,
         default: ""
     },
-    endtime: {
+    time: {
         type: Date,
         required: true,
-        default: ((Date.now / 1000) + ( 3600 * 24 )),
     },
 
 });
