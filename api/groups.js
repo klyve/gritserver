@@ -59,7 +59,7 @@ module.exports = (api) => {
             memberData.map(member => {
               ret.members.push(member);
             })
-            console.log(member)
+            console.log(ret)
 
             Challenge.getChallenges({_id: {$in:data.challenges}}, function(err, challengeData) {
               if(!data)
