@@ -13,12 +13,11 @@ var ChallengeSchema = mongoose.Schema({
         required: true,
     },
     images: { 
-        type: Array,       // valid url
+        type: Array,
         default: [],
     },
     description: {
         type: String,
-        maxlength: 3000,
     },
     endtime: {
         type: Date,
@@ -30,3 +29,7 @@ var ChallengeSchema = mongoose.Schema({
                                     // All models should be called <name>Model for consistency.
 
 let ChallengeModel = module.exports = mongoose.model('ChallengeModel', ChallengeSchema, 'challenges');
+
+module.exports.createChallenge = function(data, callback) {
+  ChallengeModel.create(data, callback);
+}

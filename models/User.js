@@ -18,15 +18,19 @@ var UserSchema = mongoose.Schema({
     },
     image: {
       type: String,
+      default: ""
     },
     bio: {
       type: String,
+      default: ""
     },
     groups: {
       type: Array,
+      default: []
     },
     friends: {
       type: Array,
+      default: []
     },
     create_date: {
       type: Date,
