@@ -159,7 +159,7 @@ module.exports = (api) => {
           image: data.image,
           notifications: []
         };
-
+        console.log(usr)
         User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
           if(friendsData)
             usr.friends = friendsData;
