@@ -15,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/challenge')    // Connecting to loca
 app.use(bodyParser.urlencoded({ extended: false }))        // Middleware, parses https requests get/POST, so that they arrive as objects.
 app.use(bodyParser.json())                                 // Middleware, does the same for JSON requests. No parsing needed in code.
 
+
 require('./api/groups')(api);                         // require group and user module
 require('./api/user')(api);                           // and puts them in api ????
 // Enable the api
@@ -26,7 +27,8 @@ app.all('*', (req,res) => {                           // Sets up an error messag
     "error_message": "Bad request, 404 not found"
   })
 })
-app.listen(3000, function () {                        // app listen port 3000
+
+app.listen(80, function () {
   console.log('app listening on port 80!')
 })
 

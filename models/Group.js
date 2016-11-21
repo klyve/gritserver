@@ -36,10 +36,12 @@ let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'gro
 
 
 module.exports.getGroups = function(query, callback) {
-  //mongoose.
   GroupModel.find(query, callback);
 }
 
+module.exports.getGroup = function(query, callback) {
+  GroupModel.findOne(query, callback);
+}
 module.exports.createGroup = function(data, callback) {
   GroupModel.create(data, callback);
 }
