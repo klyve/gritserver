@@ -72,6 +72,14 @@ module.exports.removeFriend = function(id, fid, callback) {
     callback
   )
 }
+module.exports.leaveGroup = function(uid, gid, callback) {
+  UserModel.findByIdAndUpdate(
+    uid,
+    {$pull: {"groups": gid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.addFriend = function(id, fid, callback) {
   UserModel.findByIdAndUpdate(
     id,

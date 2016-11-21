@@ -8,6 +8,26 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
+
+  api.route('/groups/leave')
+    .post((req, res) => {
+      let id = req.body.groupid;
+      let userid = jwt.verify(req.body.token, 'supersecret').uid;
+
+      User.leaveGroup(userid, id, function(err, data) {
+        if(err)
+          return res.send({
+            error: "Could not leave group"
+          })
+        Group.leaveGroup(userid, id, function(err, data) {
+          if(err)
+            return res.send({
+              error: "Could not leave group!"
+            })
+          res.send(data);
+        })
+      })
+    })
   api.route('/groups/getdata')
     .post((req, res) => {
       let id = req.body._id

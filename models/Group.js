@@ -46,7 +46,7 @@ let GroupModel = module.exports = mongoose.model('GroupModel', GroupSchema, 'gro
 module.exports.joinGroup = function(id, mid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
-    {$pushAll: {members: mid}},
+    {$push: {members: mid}},
     {safe: true, upsert: true},
     callback
   )
@@ -55,6 +55,14 @@ module.exports.addChallenge = function(id, cid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
     {$push: {"challenges": cid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
+module.exports.leaveGroup = function(uid, gid, callback) {
+  GroupModel.findByIdAndUpdate(
+    gid,
+    {$pull: {"members": uid}},
     {safe: true, upsert: true},
     callback
   )
