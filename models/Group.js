@@ -52,7 +52,7 @@ module.exports.joinGroup = function(id, mid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
     {$push: {members: mid}},
-    {safe: true, upsert: true},
+    {upsert: true},
     callback
   )
 }
