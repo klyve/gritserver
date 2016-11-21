@@ -91,7 +91,7 @@ module.exports = (api) => {
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
 
-      User.updateUser(userid, {bio: "WHATS UP"}, function(err, data){
+      User.updateUser(userid, {'settings.'+req.body.data.type: req.body.data.value}, function(err, data){
         if(err)
           res.send({
             error: true,
