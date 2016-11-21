@@ -2,13 +2,71 @@
 
 let bluebird  = require('bluebird'),
     User = require('../models/User.js'),
+    Notifications = require('../models/Notifications.js'),
     Group = require('../models/Group.js'),
     jwt = require('jsonwebtoken'),
     crypto = require('crypto')
 
 
 module.exports = (api) => {
+  api.route('/user/addFriend')
+    .post((req, res) => {
+      let userid = jwt.verify(req.body.token, 'supersecret').uid;
+      //let userid = req.body.token;
+      let friend = req.body._id;
+      Notifications.getNotification({
+        sender: friend,
+        reciever: userid,
+        type: "ADD_FRIEND",
+        read: false
+      }, function(err, data) {
+        if(data) {
+          Notifications.update({_id: data._id},{
+            sender: friend,
+            reciever: userid,
+            type: "ADD_FRIEND",
+            read: true,
+          }, function(err, data) {
+              User.addFriend(userid, friend, function(err, data) {
+                if(!data)
+                  return res.send({
+                    error: true,
+                    error_message: "Could not add friend"
+                  })
+                User.addFriend(friend, userid, function(err, data) {
+                  if(!data)
+                    return res.send({
+                      error: true,
+                      error_message: "Could not add friend"
+                    })
+                  return res.send({
+                    status: 200,
+                    message: "Friend added!"
+                  })
+                })
+              })
+          })
+        }else {
+          Notifications.add({
+            sender: userid,
+            reciever: friend,
+            type: "ADD_FRIEND",
+            message: "",
+          }, function(err, data) {
+            console.log(err, data);
+            return res.send({
+              status: 200,
+              message: "Friend request sent!"
+            })
+          })
+        }
 
+      })
+    })
+  api.route('/user/removeFriend')
+    .post((req, res) => {
+
+    })
   api.route('/user/:id')
     .get((req, res) => {
       console.log(req.params.id)
@@ -112,8 +170,21 @@ module.exports = (api) => {
     })
   api.route('/user/notifications')
     .post((req, res) => {
-      res.send({
-        notifications: Math.floor(Math.random() * 6),
+      //let token = req.body.token;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      Notifications.getNotifications({
+        reciever: token,
+        read: false,
+      }, function(err, data) {
+        console.log(err, data);
+        if(!data.length)
+          return res.send({
+            notifications: 0,
+          })
+        return res.send({
+          notifications: data.length,
+          data
+        })
       })
     })
   api.route('/user/auth')

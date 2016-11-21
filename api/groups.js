@@ -33,7 +33,7 @@ module.exports = (api) => {
             "message": "/groups/:id not available",
             err
           })
-        res.send({
+        return res.send({
           groups
         })
       })
