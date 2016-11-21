@@ -90,8 +90,10 @@ module.exports = (api) => {
   api.route('/user/update')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
+
       let data = {}
-      data['settings.'+req.body.data.type] = req.body.data.type;
+      data['options.'+req.body.data.type] = req.body.data.type;
+
       User.updateUser(userid, data, function(err, data){
         if(err)
           res.send({
