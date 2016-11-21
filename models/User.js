@@ -2,7 +2,7 @@
 let mongoose = require('mongoose');
 
 
-var UserSchema = mongoose.Schema({
+var UserSchema = mongoose.Schema({              // why not 'new moongose.Schema' ? 
     nick: {
       type: String,
       required: true,
