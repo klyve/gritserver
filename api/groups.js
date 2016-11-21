@@ -17,7 +17,7 @@ module.exports = (api) => {
             error: "Could not get the group!"
           })
           let ret = {
-            _id: data._id
+            _id: data._id,
             name: data.name,
             grouptype: data.grouptype,
             image: data.image,
