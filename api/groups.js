@@ -7,7 +7,7 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
-  api.groups('/groups/getdata')
+  api.route('/groups/getdata')
     .post((req, res) => {
       let id = req.body._id
 
