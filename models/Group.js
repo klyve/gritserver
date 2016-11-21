@@ -42,7 +42,7 @@ module.exports.joinGroup = function(id, mid, callback) {
     callback
   )
 }
-moduke.exports.addChallenge = function(id, cid, callback) {
+module.exports.addChallenge = function(id, cid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
     {$push: {"challenges": cid}},
