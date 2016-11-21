@@ -22,6 +22,10 @@ module.exports = (api) => {
         creator,
         time,
       }, function(err, data) {
+        if(!data)
+          return res.send({
+            error: "Could not create challenge"
+          })
         Group.addChallenge(groupid, data._id, function(err, cdata) {
           if(!cdata)
             return res.send({
