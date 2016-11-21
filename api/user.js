@@ -146,15 +146,16 @@ module.exports = (api) => {
             message: "Could not find the user"
           })
 
-        let usr = data;
-        User.getUsers({_id: {$in:data.friends}}, function(err, friendsData) {
-          if(friendsData)
-            data.friends = friendsData;
 
-            Group.getGroups({_id: {$in:data.groups}}, function(err, groupsData) {
+        let usr = Object.create(data);
+        User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
+          if(friendsData)
+            usr.friends = friendsData;
+
+            Group.getGroups({_id: {$in:usr.groups}}, function(err, groupsData) {
               if(groupsData)
-                data.groups = groupsData;
-                data.notifications = [];
+                usr.groups = groupsData;
+                usr.notifications = [];
                 Notifications.getNotifications({
                   reciever: userid,
                   read: false,
@@ -180,7 +181,7 @@ module.exports = (api) => {
                     User.getUsers({_id: {$in:users}}, function(err, friendsData) {
                       if(err)
                         return res.send({
-                          notifications: []
+                          error: "ERROR!"
                         })
                       sendData.map(notification => {
                         friendsData.map((friend, i) => {
@@ -189,7 +190,7 @@ module.exports = (api) => {
                           }
                         })
                       })
-                      data.notifications = sendData;
+                      usr.notifications = sendData;
                     })
 
                   }
