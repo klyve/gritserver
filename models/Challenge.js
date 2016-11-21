@@ -7,17 +7,21 @@ var ChallengeSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+        default: ""
     },
     creator: {
         type: String,
         required: true,
+        default: ""
     },
     images: { 
         type: Array,
         default: [],
+        default: ""
     },
     description: {
         type: String,
+        default: ""
     },
     endtime: {
         type: Date,

@@ -2,10 +2,26 @@
 let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
     User = require('../models/User.js'),
+    Challenge = require('../models/Challenge.js'),
     jwt = require('jsonwebtoken');
 
 
 module.exports = (api) => {
+
+  api.route('/groups/challenge')
+    .post((req, res) => {
+      let name = req.body.name;
+      let description = req.body.description;
+      let creator = jwt.verify(req.body.token, 'supersecret').uid;
+
+      Challenge.createChallenge({
+        name,
+        description,
+        creator,
+      }, function(err, data) {
+
+      })
+    })
 
   api.route('/groups/search')
     .post((req, res) => {
@@ -29,20 +45,7 @@ module.exports = (api) => {
       })
     })
 
-  api.route('/groups/:id')
-    .post((req, res) => {
-      Group.getGroups({_id: req.params.id}, function(err, groups) {
-        if(err)
-          return res.send({
-            error: true,
-            "message": "/groups/:id not available",
-            err
-          })
-        return res.send({
-          groups
-        })
-      })
-    })
+
   api.route('/groups/join')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;
@@ -139,5 +142,19 @@ module.exports = (api) => {
 
     })
 
+    api.route('/groups/:id')
+      .post((req, res) => {
+        Group.getGroups({_id: req.params.id}, function(err, groups) {
+          if(err)
+            return res.send({
+              error: true,
+              "message": "/groups/:id not available",
+              err
+            })
+          return res.send({
+            groups
+          })
+        })
+      })
 
 }
