@@ -2,7 +2,7 @@
 let mongoose = require('mongoose');
 
 
-var UserSchema = mongoose.Schema({              // why not 'new moongose.Schema' ? 
+var UserSchema = mongoose.Schema({              // why not 'new moongose.Schema' ?
     nick: {
       type: String,
       required: true,
@@ -32,7 +32,7 @@ var UserSchema = mongoose.Schema({              // why not 'new moongose.Schema'
       default: Date.now,
     }
 });
-
+                                // All models should be called <name>Model for consistency.
 let UserModel = module.exports = mongoose.model('UserModel', UserSchema, 'users');
 
 

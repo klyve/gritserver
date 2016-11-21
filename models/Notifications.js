@@ -16,7 +16,7 @@ var NotificationSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        enum: ['gruppeinvitasjon', 'venneinvitasjon'], 
+        enum: ['gruppeinvitasjon', 'venneinvitasjon'],
         required: true,
     },
     timestamp: {
@@ -36,5 +36,5 @@ var NotificationSchema = mongoose.Schema({
     },
 
 });
-                                                                                                
+                                      // All models should be called <name>Model for consistency.
 let NotificationModel = module.exports = mongoose.model('NotificationModel', NotificationSchema, 'notifications');
