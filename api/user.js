@@ -12,7 +12,6 @@ let bluebird  = require('bluebird'),
 var uuid = require('node-uuid');
 
 
-var formidable = require("formidable");
 
 module.exports = (api) => {
 
