@@ -13,7 +13,8 @@ let mongoose = require('mongoose')                         // mongoDB library fo
 mongoose.connect('mongodb://127.0.0.1:27017/challenge')    // Connecting to localhost database
 
 app.use(bodyParser.urlencoded({ extended: false }))        // Middleware, parses https requests get/POST, so that they arrive as objects.
-app.use(bodyParser.json())                                 // Middleware, does the same for JSON requests. No parsing needed in code.
+app.use(bodyParser.json({limit: '50mb'}))                                 // Middleware, does the same for JSON requests. No parsing needed in code.
+app.use('/images', express.static('public'))
 
 require('./api/groups')(api);                         // require group and user module
 require('./api/user')(api);                           // and puts them in api ????
@@ -22,11 +23,11 @@ app.use('/api', api)                                  // Enable the api
 app.all('*', (req,res) => {                           // Sets up an error message for all routes in domain which is not handled. Catch all.
   res.send({                                          // Req = request object which contains payload from client
     "error": "bad_request",                           // Res = result object that is sent back to client
-    "error_message": "Bad request, 404 not found"
+    "error_message": "Bad request, 404 not founds"
   })
 })
 
-app.listen(80, function () {
+app.listen(3000, function () {
   console.log('app listening on port 80!')
 })
 

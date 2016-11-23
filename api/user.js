@@ -4,11 +4,46 @@ let bluebird  = require('bluebird'),
     User = require('../models/User.js'),
     Notifications = require('../models/Notifications.js'),
     Group = require('../models/Group.js'),
+    Image = require('../models/Image.js'),
     jwt = require('jsonwebtoken'),
-    crypto = require('crypto')
+    crypto = require('crypto'),
+    fs = require('fs')
 
+var uuid = require('node-uuid');
+
+
+var formidable = require("formidable");
 
 module.exports = (api) => {
+
+  api.route('/user/picture')
+    .post((req, res) => {
+      let imageData = req.body.imageData;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      let base64Data = imageData.replace(/^data:image\/jpg;base64,/, "");
+      let name = uuid.v4();
+      fs.writeFile('./public/'+name+".jpg", base64Data, 'base64', function(err) {
+        if(err)
+          return res.send({
+            error: "Could not upload image"
+          })
+
+          User.updateUser({
+            _id: token
+          },{
+            image: '/images/'+name+".jpg"
+          }, function(err, data) {
+            if(err)
+              return res.send({
+                error: "Could not upload image"
+              })
+            return res.send({
+              success: "YES!"
+            })
+          })
+      });
+    })
+
   api.route('/user/addfriend')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;

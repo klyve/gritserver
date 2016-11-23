@@ -5,27 +5,26 @@ let mongoose = require('mongoose');
 var ChallengeSchema = mongoose.Schema({
 
     name: {
-        type: String,
-        required: true,
-        default: ""
+      type: String,
+      required: true,
+      default: ""
     },
     creator: {
-        type: String,
-        required: true,
-        default: ""
+      type: String,
+      required: true,
+      default: ""
     },
     images: { 
-        type: Array,
-        default: [],
-        default: ""
+      type: Array,
+      default: [],
     },
     description: {
-        type: String,
-        default: ""
+      type: String,
+      default: ""
     },
     time: {
-        type: Date,
-        required: true,
+      type: Date,
+      required: true,
     },
 
 });
