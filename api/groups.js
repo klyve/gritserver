@@ -3,12 +3,44 @@ let bluebird  = require('bluebird'),
     Group = require('../models/Group.js'),
     User = require('../models/User.js'),
     Challenge = require('../models/Challenge.js'),
+    Image = require('../models/Image.js'),
     Leaderboard = require('../models/Leaderboard.js'),
     jwt = require('jsonwebtoken');
 
 
 module.exports = (api) => {
 
+  api.route('/groups/challengepicture')
+  .post((req, res) => {
+    let imageData = req.body.imageData;
+    let token = jwt.verify(req.body.token, 'supersecret').uid;
+    let base64Data = imageData.replace(/^data:image\/jpg;base64,/, "");
+    let name = uuid.v4();
+    let groupid = req.body.groupid;
+    fs.writeFile('./public/'+name+".jpg", base64Data, 'base64', function(err) {
+      if(err)
+        return res.send({
+          error: "Could not upload image"
+        })
+        Image.createImage({
+          src: '/public/'+name+'.jpg',
+          user: token,
+        }, function(err, data) {
+          if(err)
+            res.send({
+              error: "Could not upload picture"
+            })
+          Challenge.addPicture(groupid, data._id, function(err, data) {
+            if(err)
+              res.send({
+                error: "Could not upload picture"
+              })
+
+          })
+        })
+
+    });
+  })
   api.route('/groups/leave')
     .post((req, res) => {
       let id = req.body.groupid;
@@ -199,7 +231,7 @@ module.exports = (api) => {
             admins: [usr._id],
             members: [usr._id],
             bio: 'Hello world',
-            image: 'https://unsplash.it/400/400/?random',
+            image: '/images/group.jpg',
             challenges: []
           }
           Group.createGroup(groupData, function(err, grp) {

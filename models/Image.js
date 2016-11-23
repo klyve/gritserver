@@ -8,6 +8,11 @@ var ImageSchema = mongoose.Schema({
       default: "",
       required: true,
     },
+    user: {
+      type: String,
+      default: "",
+      required: true,
+    },
     points: {
       type: Number,
       default: 0,

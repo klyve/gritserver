@@ -35,7 +35,14 @@ let ChallengeModel = module.exports = mongoose.model('ChallengeModel', Challenge
 module.exports.createChallenge = function(data, callback) {
   ChallengeModel.create(data, callback);
 }
-
+module.exports.addPicture = function(id, pid, callback) {
+  ChallengeModel.findByIdAndUpdate(
+    id,
+    {$push: {"images": pid}},
+    {safe: true, upsert: true},
+    callback
+  )
+}
 module.exports.getChallenge = function(data, callback) {
   ChallengeModel.findOne(data, callback);
 }

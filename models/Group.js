@@ -56,6 +56,7 @@ module.exports.joinGroup = function(id, mid, callback) {
     callback
   )
 }
+
 module.exports.addChallenge = function(id, cid, callback) {
   GroupModel.findByIdAndUpdate(
     id,
