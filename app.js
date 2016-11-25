@@ -20,6 +20,10 @@ require('./api/groups')(api);                         // require group and user 
 require('./api/user')(api);                           // and puts them in api ????
 app.use('/api', api)                                  // Enable the api
 
+app.get('/', (req, res) => {
+  res.sendfile('public/index.html', {root: __dirname })
+})
+
 app.all('*', (req,res) => {                           // Sets up an error message for all routes in domain which is not handled. Catch all.
   res.send({                                          // Req = request object which contains payload from client
     "error": "bad_request",                           // Res = result object that is sent back to client
