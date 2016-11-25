@@ -37,12 +37,71 @@ module.exports = (api) => {
                 error: "Could not upload image"
               })
             return res.send({
-              success: "YES!"
+              image: '/images/'+name+".jpg"
             })
           })
       });
     })
 
+  api.route('/user/hidenotifications')
+    .post((req, res) => {
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+
+      Notifications.setRead(req.body._id,function(err, data) {
+        if(err)
+          return res.send({
+            error: "Could not remove notification",
+          })
+          console.log(data)
+
+          Notifications.getNotifications({
+            reciever: token,
+            read: false,
+          }, function(err, data) {
+            if(!data.length)
+              return res.send({
+                notifications: [],
+              })
+              let users = []
+              let sendData = [];
+              data.map(notification => {
+                users.push(notification.sender);
+                sendData.push({
+                  _id: notification.sender,
+                  reciever: notification.reciever,
+                  senderId: notification.sender,
+                  sender: {},
+                  type: notification.type,
+                  message: notification.message,
+                  timestamp: notification.timestamp,
+                  read: notification.read,
+                })
+              })
+
+
+              User.getUsers({_id: {$in:users}}, function(err, friendsData) {
+                if(err)
+                  return res.send({
+                    notifications: []
+                  })
+                sendData.map(notification => {
+                  friendsData.map((friend, i) => {
+                    if(notification.senderId == friend._id) {
+                      notification.sender = friend;
+                    }
+                  })
+                })
+
+
+                return res.send({
+                  notifications: sendData
+                })
+              })
+
+
+          })
+      })
+    })
   api.route('/user/addfriend')
     .post((req, res) => {
       let userid = jwt.verify(req.body.token, 'supersecret').uid;

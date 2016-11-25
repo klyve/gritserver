@@ -46,3 +46,10 @@ module.exports.getNotification = function(data, callback) {
 module.exports.getNotifications = function(query, callback) {
   NotificationModel.find(query, callback);
 }
+
+module.exports.setRead = function(id, callback) {
+  NotificationModel.remove(
+    {_id: id},
+    callback
+  )
+}

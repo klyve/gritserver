@@ -9,6 +9,34 @@ let bluebird  = require('bluebird'),
 
 
 module.exports = (api) => {
+  api.route('/groups/picture')
+    .post((req, res) => {
+      let imageData = req.body.imageData;
+      let token = jwt.verify(req.body.token, 'supersecret').uid;
+      let base64Data = imageData.replace(/^data:image\/jpg;base64,/, "");
+      let name = uuid.v4();
+      let id = req.body._id;
+      fs.writeFile('./public/'+name+".jpg", base64Data, 'base64', function(err) {
+        if(err)
+          return res.send({
+            error: "Could not upload image"
+          })
+
+          Group.updateGroup({
+            _id: token
+          },{
+            image: '/images/'+name+".jpg"
+          }, function(err, data) {
+            if(err)
+              return res.send({
+                error: "Could not upload image"
+              })
+            return res.send({
+              image: '/images/'+name+".jpg"
+            })
+          })
+      });
+    })
 
   api.route('/groups/challengepicture')
   .post((req, res) => {

@@ -83,3 +83,7 @@ module.exports.getGroup = function(query, callback) {
 module.exports.createGroup = function(data, callback) {
   GroupModel.create(data, callback);
 }
+
+module.exports.updateGroup = function(query, data, callback) {
+  GroupModel.update(query, { $set: data }, callback);
+}
