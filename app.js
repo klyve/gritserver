@@ -14,7 +14,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/challenge')    // Connecting to loca
 
 app.use(bodyParser.urlencoded({ extended: false }))        // Middleware, parses https requests get/POST, so that they arrive as objects.
 app.use(bodyParser.json({limit: '50mb'}))                                 // Middleware, does the same for JSON requests. No parsing needed in code.
-app.use('/api/images', express.static('public'))
+app.use('/api/images', express.static('public'))                        // Middleware, does the same for JSON requests. No parsing needed in code.
+app.use('/', express.static('public'))                        // Middleware, does the same for JSON requests. No parsing needed in code.
 
 require('./api/groups')(api);                         // require group and user module
 require('./api/user')(api);                           // and puts them in api ????
