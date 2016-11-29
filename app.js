@@ -32,17 +32,17 @@ app.all('*', (req,res) => {                           // Sets up an error messag
   })
 })
 
-app.listen(80, function () {
-  console.log('app listening on port 80!')
-})
+// app.listen(80, function () {
+//   console.log('app listening on port 80!')
+// })
 
-// http.createServer(function(req, res) {
-//   res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
-//   res.end();
-// }).listen(80);
-//
-// https.createServer({
-//   key: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/privkey1.pem"),
-//   cert: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/fullchain1.pem"),
-//   ca: fs.readFileSync("/etc/letsencrypt/archive/bjartelarsen.com/chain1.pem")
-// }, app).listen(443);
+http.createServer(function(req, res) {
+  res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
+  res.end();
+}).listen(80);
+
+https.createServer({
+  key: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/privkey1.pem"),
+  cert: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/fullchain1.pem"),
+  ca: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/chain1.pem")
+}, app).listen(443);
