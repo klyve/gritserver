@@ -200,8 +200,7 @@ module.exports = (api) => {
     })
   api.route('/user/find')
     .post((req, res) => {
-      //let text = req.body.search.text;
-      let text = req.body.text;
+      let text = req.body.search.text;
       User.findUsers({nick:  new RegExp('^'+text+'(.*)$', "i")})
         .then(data => {
           return res.send({
@@ -223,8 +222,6 @@ module.exports = (api) => {
           error: "No usertoken"
         })
       let userid = userModule.getToken(req.body.token);
-
-
       let promises = []
 
       User.getUser(userid)
@@ -241,6 +238,7 @@ module.exports = (api) => {
             image: data.image,
             notifications: []
           };
+          console.log(usr);
           promises.push(User.getFriends(usr.friends))
           promises.push(Group.getUserGroups(usr.groups))
           promises.push(Notifications.getUserNotifications(usr._id))
@@ -250,9 +248,7 @@ module.exports = (api) => {
               usr.friends = data[0]
               usr.groups = data[1]
               usr.notifications = data[2]
-              return res.send({
-                usr
-              })
+              return res.send(usr)
             })
             .catch(err => {
               return res.send({
@@ -467,7 +463,6 @@ module.exports = (api) => {
           return res.send(d)
         })
         .catch(err => {
-          console.log("NOT HERE")
           return res.send({error: true, err});
         })
     })

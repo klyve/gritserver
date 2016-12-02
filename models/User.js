@@ -68,8 +68,8 @@ module.exports.findUsers = function(data) {
   return UserModel.find(data, {password: 0}).exec();
 }
 module.exports.authUser = function(username, password) {
-  return UserModel.find({
-    username,
+  return UserModel.findOne({
+    number: username,
     password
   }, {password: 0}).exec()
 }
