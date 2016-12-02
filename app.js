@@ -40,14 +40,13 @@ if(process.env.NODE_ENV == 'development') {
 }else {
   // HTTPS Server using letsencrypt
   http.createServer(function(req, res) {
-    let host = req.headers['host'].replace(/www\./,'')
-    console.log(host)
-    console.log(req.headers['host'], req.url)
-    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url})
+    res.writeHead(301, {"Location": "https://" + req.headers.host.replace(/^www\./, '') + req.url})
     res.end()
   }).listen(80)
 
-  https.createServer({
+  https.createServer(function(req, res) {
+    console.log("Created https server")
+  },{
     key: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/privkey1.pem"),
     cert: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/fullchain1.pem"),
     ca: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/chain1.pem")
