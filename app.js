@@ -40,8 +40,8 @@ if(process.env.NODE_ENV == 'development') {
 }else {
   // HTTPS Server using letsencrypt
   http.createServer(function(req, res) {
-    // let host = req.headers['host'].replace(/www\./,'')
-    // console.log(host)
+    let host = req.headers['host'].replace(/www\./,'')
+    console.log(host)
     console.log(req.headers['host'], req.url)
     res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url})
     res.end()
