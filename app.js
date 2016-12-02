@@ -44,11 +44,9 @@ if(process.env.NODE_ENV == 'development') {
     res.end()
   }).listen(80)
 
-  https.createServer(function(req, res) {
-    console.log("Created https server")
-  },{
+  https.createServer({
     key: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/privkey1.pem"),
     cert: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/fullchain1.pem"),
     ca: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/chain1.pem")
-  }, app).listen(443)
+  }, [app]).listen(443)
 }
