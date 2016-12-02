@@ -11,6 +11,7 @@ let bluebird  = require('bluebird'),
 
 var uuid = require('node-uuid');
 
+let userModule = require('./modules/user');
 
 
 module.exports = (api) => {
@@ -197,31 +198,23 @@ module.exports = (api) => {
         })
       })
     })
-  api.route('/user/:id')
-    .get((req, res) => {
-      console.log(req.params.id)
-      User.getUser({_id: req.params.id}, function(err, data) {
-          return res.send({
-            data, err
-          })
-      })
-    })
   api.route('/user/find')
     .post((req, res) => {
-      let text = req.body.search.text;
-      User.getUsers({nick:  new RegExp('^'+text+'(.*)$', "i")}, function(err, data) {
-        console.log(err, data);
-        if(err)
+      //let text = req.body.search.text;
+      let text = req.body.text;
+      User.findUsers({nick:  new RegExp('^'+text+'(.*)$', "i")})
+        .then(data => {
+          return res.send({
+            users: data,
+            search: req.body.search
+          })
+        })
+        .catch(err => {
           return res.send({
             "error": true,
             "error_message": "Could not fetch users",
           })
-
-        return res.send({
-          users: data,
-          search: req.body.search
         })
-      })
     })
   api.route('/user/data')
     .post((req, res) => {
@@ -229,135 +222,187 @@ module.exports = (api) => {
         return res.send({
           error: "No usertoken"
         })
-      let userid = jwt.verify(req.body.token, 'supersecret').uid;
-      //let userid = req.body.token; // For debugging
-
-      //userid.toString()
+      let userid = userModule.getToken(req.body.token);
 
 
-      User.getUser({_id: userid}, function(err,data) {
-        //console.log(err, data);
-        if(err || !data)
-          return res.send({
-            error: true,
-            message: "Could not find the user"
-          })
+      let promises = []
 
+      User.getUser(userid)
+        .then(data => {
+          let usr = {
+            _id: data._id,
+            nick: data.nick,
+            number: data.number,
+            options: data.options,
+            create_date: data.create_date,
+            friends: data.friends,
+            groups: data.groups,
+            bio: data.bio,
+            image: data.image,
+            notifications: []
+          };
+          promises.push(User.getFriends(usr.friends))
+          promises.push(Group.getUserGroups(usr.groups))
+          promises.push(Notifications.getUserNotifications(usr._id))
 
-        let usr = {
-          _id: data._id,
-          nick: data.nick,
-          number: data.number,
-          options: data.options,
-          create_date: data.create_date,
-          friends: data.friends,
-          groups: data.groups,
-          bio: data.bio,
-          image: data.image,
-          notifications: []
-        };
-        User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
-          if(friendsData)
-            usr.friends = friendsData;
-
-            Group.getGroups({_id: {$in:usr.groups}}, function(err, groupsData) {
-              if(groupsData)
-                usr.groups = groupsData;
-                Notifications.getNotifications({
-                  reciever: userid,
-                  read: false,
-                }, function(err, notificationData) {
-                    if(err)
-                      return res.send({
-                        err
-                      })
-                    let users = []
-                    let sendData = [];
-                    notificationData.map(notification => {
-                      users.push(notification.sender);
-                      sendData.push({
-                        _id: notification.sender,
-                        reciever: notification.reciever,
-                        senderId: notification.sender,
-                        sender: {},
-                        type: notification.type,
-                        message: notification.message,
-                        timestamp: notification.timestamp,
-                        read: notification.read,
-                      })
-                    })
-
-
-                    User.getUsers({_id: {$in:users}}, function(err, friendsData) {
-                      if(err)
-                        return res.send({
-                          error: "ERROR!"
-                        })
-                      sendData.map(notification => {
-                        friendsData.map((friend, i) => {
-                          if(notification.senderId == friend._id) {
-                            notification.sender = friend;
-                          }
-                        })
-                      })
-                      sendData.map(udata => {
-                        usr.notifications.push(udata);
-                      })
-
-                      return res.send(usr)
-                    })
-
-                })
-
-
+          bluebird.all(promises)
+            .then(data => {
+              usr.friends = data[0]
+              usr.groups = data[1]
+              usr.notifications = data[2]
+              return res.send({
+                usr
+              })
             })
-
+            .catch(err => {
+              return res.send({
+                error: "Could not do stuff...",
+                err
+              })
+            })
+        })
+        .catch(err => {
+          return res.send({
+            "error": "Could not do stuff",
+            err
+          })
         })
 
-
-      })
+      // User.getUser({_id: userid}, function(err,data) {
+      //   //console.log(err, data);
+      //   if(err || !data)
+      //     return res.send({
+      //       error: true,
+      //       message: "Could not find the user"
+      //     })
+      //
+      //
+      //   let usr = {
+      //     _id: data._id,
+      //     nick: data.nick,
+      //     number: data.number,
+      //     options: data.options,
+      //     create_date: data.create_date,
+      //     friends: data.friends,
+      //     groups: data.groups,
+      //     bio: data.bio,
+      //     image: data.image,
+      //     notifications: []
+      //   };
+      //   User.getUsers({_id: {$in:usr.friends}}, function(err, friendsData) {
+      //     if(friendsData)
+      //       usr.friends = friendsData;
+      //
+      //       Group.getGroups({_id: {$in:usr.groups}}, function(err, groupsData) {
+      //         if(groupsData)
+      //           usr.groups = groupsData;
+      //           Notifications.getNotifications({
+      //             reciever: userid,
+      //             read: false,
+      //           }, function(err, notificationData) {
+      //               if(err)
+      //                 return res.send({
+      //                   err
+      //                 })
+      //               let users = []
+      //               let sendData = [];
+      //               notificationData.map(notification => {
+      //                 users.push(notification.sender);
+      //                 sendData.push({
+      //                   _id: notification.sender,
+      //                   reciever: notification.reciever,
+      //                   senderId: notification.sender,
+      //                   sender: {},
+      //                   type: notification.type,
+      //                   message: notification.message,
+      //                   timestamp: notification.timestamp,
+      //                   read: notification.read,
+      //                 })
+      //               })
+      //
+      //
+      //               User.getUsers({_id: {$in:users}}, function(err, friendsData) {
+      //                 if(err)
+      //                   return res.send({
+      //                     error: "ERROR!"
+      //                   })
+      //                 sendData.map(notification => {
+      //                   friendsData.map((friend, i) => {
+      //                     if(notification.senderId == friend._id) {
+      //                       notification.sender = friend;
+      //                     }
+      //                   })
+      //                 })
+      //                 sendData.map(udata => {
+      //                   usr.notifications.push(udata);
+      //                 })
+      //
+      //                 return res.send(usr)
+      //               })
+      //
+      //           })
+      //
+      //
+      //       })
+      //
+      //   })
+      //
+      //
+      // })
     })
   api.route('/user')
     .post((req, res) => {
-      User.getUser({nick: req.body.username}, function(err, data) {
-        if(data) {
-          return res.send({
-            error: true,
-            error_msg: "Nickname in use",
-          })
-        }
-        User.getUser({number: req.body.number}, function(err, data) {
-          if(data)
+
+      let promises = [];
+      promises.push(User.findUser({nick: { $regex : new RegExp("^" + req.body.username, "i") }}))
+      promises.push(User.findUser({number: req.body.number}))
+
+      bluebird.all(promises)
+        .then(data => {
+          if(data[0]) {
+            return res.send({
+              error: true,
+              error_msg: "Nickname in use",
+            })
+          }
+          if(data[1]) {
             return res.send({
               error: true,
               error_msg: "Phone number in use",
             })
-
+          }
           User.createUser({
-            nick: req.body.username,
-            number: req.body.number,
-            password: req.body.password,
-            bio: "",
-            image: "/images/user.jpg",
-            friends: [],
-            groups: []
-          }, function(err, data) {
-            if(err) {
+              nick: req.body.username,
+              number: req.body.number,
+              password: req.body.password,
+              bio: "",
+              image: "/images/user.jpg",
+              friends: [],
+              groups: []
+            }, function(err, data) {
+              if(err) {
+                return res.send({
+                  data: req.body,
+                  err,
+                })
+              }
+              let token = jwt.sign({ uid: data._id }, 'supersecret');
               return res.send({
-                data: req.body,
-                err,
+                data,
+                status: 200,
+                token,
+                msg: "User created!"
               })
-            }
-            let token = jwt.sign({ uid: data._id }, 'supersecret');
-            return res.send({
-              data,
-              status: 200,
-              token,
-              msg: "User created!"
             })
+
+        })
+        .catch(err => {
+          return res.send({
+            error: "Could not register the user",
+            err
           })
         })
-      })
+
     })
   api.route('/user/notifications')
     .post((req, res) => {
@@ -412,27 +457,19 @@ module.exports = (api) => {
     })
   api.route('/user/auth')
     .post((req, res) => {
-      // let token = jwt.sign({ uid: 'bullshit' }, 'supersecret');
-      // return res.send({
-      //   status: 200,
-      //   token,
-      // })
-
-      User.getUser({
-        number: req.body.username,
-        password: req.body.password,
-      }, function(err, data) {
-        if(err || !data) {
-          res.send({error: true});
-        }else {
+      User.authUser(req.body.username, req.body.password)
+        .then(data => {
           let token = jwt.sign({ uid: data._id }, 'supersecret');
           let d = {
             status: 200,
             token,
           }
-          res.send(d)
-        }
-      })
+          return res.send(d)
+        })
+        .catch(err => {
+          console.log("NOT HERE")
+          return res.send({error: true, err});
+        })
     })
 
 }

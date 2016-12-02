@@ -76,6 +76,9 @@ module.exports.leaveGroup = function(uid, gid, callback) {
 module.exports.getGroups = function(query, callback) {
   GroupModel.find(query, callback);
 }
+module.exports.getUserGroups = function(groups) {
+  return GroupModel.find({_id: {$in:groups}}).exec();
+}
 
 module.exports.getGroup = function(query, callback) {
   GroupModel.findOne(query, callback);
