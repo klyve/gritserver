@@ -18,6 +18,14 @@ app.use(bodyParser.json({limit: '50mb'}))
 app.use('/api/images', express.static('public'))
 app.use('/', express.static('public'))
 
+app.get('/*', function(req, res, next) {
+  if (req.headers.host.match(/^www/) !== null ) {
+    res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else {
+    next();     
+  }
+})
+
 require('./api/groups')(api)
 require('./api/user')(api)
 app.use('/api', api)
@@ -44,9 +52,13 @@ if(process.env.NODE_ENV == 'development') {
     res.end()
   }).listen(80)
 
-  https.createServer({
+  let https = https.createServer({
     key: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/privkey1.pem"),
     cert: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/fullchain1.pem"),
     ca: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/chain1.pem")
-  }, [app]).listen(443)
+  }, app).listen(443)
+  // https.addListener("request", (req, res) => {
+  //
+  // });
+
 }
