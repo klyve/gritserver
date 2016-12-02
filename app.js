@@ -22,7 +22,7 @@ app.get('/*', function(req, res, next) {
   if (req.headers.host.match(/^www/) !== null ) {
     res.redirect('http://' + req.headers.host.replace(/^www\./, '') + req.url);
   } else {
-    next();     
+    next();
   }
 })
 
@@ -52,7 +52,7 @@ if(process.env.NODE_ENV == 'development') {
     res.end()
   }).listen(80)
 
-  let https = https.createServer({
+  https.createServer({
     key: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/privkey1.pem"),
     cert: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/fullchain1.pem"),
     ca: fs.readFileSync("/etc/letsencrypt/archive/gritapp.net/chain1.pem")
