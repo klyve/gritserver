@@ -42,6 +42,7 @@ if(process.env.NODE_ENV == 'development') {
   http.createServer(function(req, res) {
     let host = req.headers['host'].replace(/www\./,'')
     console.log(host)
+    console.log(req.headers['host'], req.url)
     res.writeHead(301, {"Location": "https://" + host + req.url})
     res.end()
   }).listen(80)
