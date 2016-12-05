@@ -17,8 +17,7 @@ npm install -g nodemon              // Nodemon - live server reloading
 sudo mkdir -p /data/db              // Make system MongoDb data-file
 
 cd ~/GitHub                         // Clone repo from github
-git clone
-git@github.com:klyve/challengeserver.git
+git clone git@github.com:klyve/challengeserver.git
 cd challangeserver
 
 npm install                         // Install dependencies
