@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="styles/vendor.css"/>
+        <link rel="stylesheet" href="styles/main.css"/>
+
+        <script src="scripts/vendor/modernizr.js"></script>
+
+    </head>
+    <body>
+        <!--[if lt IE 10]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+      <div class="body-container">
+
+          <div class="content-body">
+          <!-- top widgets -->
+              <div class="row">
+                  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 ">
+                      <div class="widget-box red maximizable" data-name="visitors">
+                        <div class="hidefullscreen">
+                          <h3 class="timer">22</h3>
+                          <p>Users</p>
+                          <i class="fa fa-user"></i>
+                        </div>
+                        <div class="showfullscreen">
+                            <div class="close">
+                                <i class="fa fa-close"></i>
+                            </div>
+                            <h1>Show information about visitors etc statistics and so on</h1>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                      <div class="widget-box blue maximizable">
+                        <div class="hidefullscreen">
+                          <h3 class="timer">4</h3>
+                          <p>Daily Activity</p>
+                          <i class="fa fa-globe"></i>
+                        </div>
+                        <div class="showfullscreen">
+                            <div class="close">
+                                <i class="fa fa-close"></i>
+                            </div>
+                            <h1>Show information about visitors etc statistics and so on</h1>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                      <div class="widget-box darkblue maximizable">
+                        <div class="hidefullscreen">
+                          <h3 class="timer">57</h3>
+                          <p>Pictures taken</p>
+                          <i class="fa fa-picture-o"></i>
+                        </div>
+                        <div class="showfullscreen">
+                            <div class="close">
+                                <i class="fa fa-close"></i>
+                            </div>
+                            <h1>Show information about visitors etc statistics and so on</h1>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+
+
+
+
+
+              <!-- start map and piechart -->
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="widget-box default h412 ">
+                    <div class="content">
+                        <div class="map" style="width: 100%; height: 330px;"></div>
+                      <!--
+                      <div class="col-md-4" style="height: 350px; background: orange;">
+
+                      </div>
+                      -->
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+
+                  <div class="widget-box green maximizable">
+                    <div class="hidefullscreen">
+                      <h3 class="timer">14</h3>
+                      <p>Challenges created</p>
+                      <i class="fa fa-folder-o"></i>
+                    </div>
+                    <div class="showfullscreen">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <h1>Show information about visitors etc statistics and so on</h1>
+                    </div>
+                  </div>
+                  <div class="widget-box green maximizable">
+                    <div class="hidefullscreen">
+                      <h3 class="timer">6</h3>
+                      <p>Groups</p>
+                      <i class="fa fa-users"></i>
+                    </div>
+                    <div class="showfullscreen">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <h1>Show information about visitors etc statistics and so on</h1>
+                    </div>
+                  </div>
+
+                  <div class="widget-box green maximizable">
+                    <div class="hidefullscreen">
+                      <h3 class="timer">46</h3>
+                      <p>Testers signed up</p>
+                      <i class="fa fa-user"></i>
+                    </div>
+                    <div class="showfullscreen">
+                        <div class="close">
+                            <i class="fa fa-close"></i>
+                        </div>
+                        <h1>Show information about visitors etc statistics and so on</h1>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!-- END MAP AND PIECHART -->
+
+              <!-- start map and piechart -->
+              <!-- END MAP AND PIECHART -->
+
+              <!-- START STATISTICS -->
+              <div class="row">
+                  <div class="col-md-12">
+                      <div class="widget-box default">
+                          <div class="header">
+                              <h2 class="pull-left"><i class="fa fa-bar-chart"></i> <b>App</b> statistics</h2>
+                              <ul class="menu pull-right">
+                                  <li class="showonhover"><a href="#"><i class="fa fa-cog"></i></a></li>
+                                  <li class="showonhover"><a href="#"><i class="fa fa-arrows-alt"></i></a></li>
+                                  <li><a href="#" class="togglewidgetbox"><i class="fa fa-chevron-down"></i></a></li>
+                                  <li><a href="#" class="closeme"><i class="fa fa-close"></i></a></li>
+                              </ul>
+                          </div>
+                          <div class="content">
+                              <div id="flotchart" style="width: 100%; height: 400px;"></div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- END STATISTICS -->
+
+
+          </div>
+      </div>
+
+
+        <script src="scripts/vendor.js"></script>
+
+        <script src="scripts/plugins.js"></script>
+
+        <script src="bower_components/flot/jquery.flot.js"></script>
+        <script src="bower_components/flot/jquery.flot.spline.js"></script>
+        <script src="bower_components/flot/jquery.flot.categories.js"></script>
+        <script src="bower_components/flot/jquery.flot.resize.js"></script>
+        <script src="bower_components/flot/jquery.flot.pie.js"></script>
+        <script src="scripts/main.js"></script>
+</body>
+</html>

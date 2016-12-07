@@ -16,6 +16,7 @@ mongoose.Promise = require('bluebird') // Use a promise library for mongoose
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use('/api/images', express.static('public'))
+app.use('/stats', express.static('dashboard'))
 app.use('/', express.static('public'))
 
 app.get('/*', function(req, res, next) {
@@ -48,7 +49,7 @@ if(process.env.NODE_ENV == 'development') {
 }else {
   // HTTPS Server using letsencrypt
   http.createServer(function(req, res) {
-    res.writeHead(301, {"Location": "https://" + req.headers.host.replace(/^www\./, '') + req.url})
+    res.writeHead(301, {"Location": "https://" + req.headers['host'] + req.url});
     res.end()
   }).listen(80)
 
