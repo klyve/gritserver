@@ -2,71 +2,30 @@
 
 &nbsp;
 
-####Install server on macOS Sierra 10.12.1
-*20.11.2016*
-
-1. Install homebrew - paste following in terminal:
+#### Install local server on macOS Sierra 10.12.1
+*Last updated: 06.12.2016*
 
 ```bash
+                                    // Get brew, just...
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-```
 
-2\. Update brew
-```bash
- brew update
-```
+brew update
+brew install mongodb                // Mongo database
+brew install node                   // JS package-manager
 
-3\. Install MongoDB
-```bash
-brew install mongodb
-```
+npm install -g nodemon              // Nodemon - live server reloading
+sudo mkdir -p /data/db              // Make system MongoDb data-file
 
-4\. Install node.js
-```bash
-brew install node
-```
-
-5\. Install node.js package that makes live reloading of npm server possible
-```bash
-npm install -g nodemon
-```
-
-6\. Make system MongoDb data-file
-```bash
-sudo mkdir -p /data/db
-```
-
-7\. Navigate to directory were you want server to reside, for instance:
-```bash
-cd ~/GitHub
-```
-
-8\. Clone server repo from git
-```bash
+cd ~/GitHub                         // Clone repo from github
 git clone git@github.com:klyve/challengeserver.git
-```
-
-9\. Move into server
-```bash
 cd challangeserver
-```
 
-10\. Install local node.js packages
-```bash
-npm install
-```
+npm install                         // Install dependencies
+sudo mongod                         // Launch DB
+nodemon app.js                      // Launch server
 
-11\. Launch mongod from a separate terminal window and let it run
-```bash
-sudo mongod
+// DONE!
 ```
-
-12\. Launch server using nodemon in project folder
-```bash
-nodemon app.js
-```
-
-13\. Enjoy!
 
 &nbsp;
 
